@@ -7,4 +7,9 @@ app_name = 'v1'
 
 router = routers.SimpleRouter()
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', include('paper_robin.apps.user.api.urls', namespace='user')),
+]
+
+
+#urlpatterns = router.urls
