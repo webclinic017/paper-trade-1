@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
     'paper_robin.apps.api',
     'paper_robin.apps.user',
 ]
