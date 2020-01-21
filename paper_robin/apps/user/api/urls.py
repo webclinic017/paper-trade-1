@@ -1,10 +1,10 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 from paper_robin.apps.user.api import views
 
 app_name = 'users'
 
-urlpatterns = [
-    path('/', views.user_list),
-    path('/<int:pk>/', views.user_detail),
-]
+router = DefaultRouter()
+router.register('users', views.UserViewSet)
+urlpatterns = router.urls
+
