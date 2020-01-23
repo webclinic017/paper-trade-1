@@ -4,7 +4,7 @@ from rest_framework import permissions
 class IsAnonOrAdminCreate(permissions.IsAuthenticated):
 
     def has_permission(self, request, view):
-        is_authenticated = super().has_permission(self, request, view)
+        is_authenticated = super().has_permission(request, view)
         # allow users to be created without authentication
         return not is_authenticated or request.user.is_superuser
 
