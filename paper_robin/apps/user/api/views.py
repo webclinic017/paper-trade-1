@@ -23,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes += [IsAnonOrAdminCreate]
         elif self.action not in permissions.SAFE_METHODS:
-            permission_classes += [permissions.IsAuthenticated, OwnerUserPermission]
+            permission_classes += [OwnerUserPermission]
         
         return [pc() for pc in permission_classes]
 
