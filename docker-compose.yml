@@ -4,8 +4,9 @@ services:
   db:
     image: postgres
   web:
+    restart: always
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn paper_robin.wsgi:application -w 2 -b :8000 --reload
     volumes:
       - .:/code/paper_robin
     ports:
