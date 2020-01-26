@@ -3,13 +3,24 @@ version: '3'
 services:
   db:
     image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=paper_robin_dev
   web:
     restart: always
     build: .
     command: gunicorn paper_robin.wsgi:application -w 2 -b :8000 --reload
     volumes:
-      - .:/code/paper_robin
+      - .:/code/
     ports:
       - "8000:8000"
+    env_file:
+      - ./.env.dev
     depends_on:
       - db
+      
+volumes:
+  postgres_data:

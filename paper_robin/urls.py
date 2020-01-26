@@ -22,5 +22,5 @@ urlpatterns = [
     path('api/', include('paper_robin.apps.api.urls', namespace='api')),
 ]
 
-# serving static files in development
+# Serving static files in development
 urlpatterns += staticfiles_urlpatterns()
