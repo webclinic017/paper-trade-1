@@ -25,8 +25,8 @@ SECRET_KEY = 'jq=jay7&&g($kgl@e7ike1jf#f_7h@dz@fn8s7c7xquq_gp%r_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=1))
 
-allowed_hosts_dev = '127.0.0.1'
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', allowed_hosts_dev).split(' ')
+default_allowed_hosts = 'localhost'
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', default_allowed_hosts).split(' ')
 
 
 # Application definition
@@ -96,7 +96,7 @@ DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
         "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
+        "USER": os.environ.get("SQL_USER", "postgres"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
