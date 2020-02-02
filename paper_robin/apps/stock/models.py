@@ -1,7 +1,8 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
-''' Example of what we're working with, similar across
+''' Example of what we're working with, similar across services
 {
     "symbols_requested": 1,
     "symbols_returned": 1,
@@ -45,12 +46,15 @@ class Stock(models.Model):
 class DailyStockData(models.Model):
     symbol = models.ForeignKey('Stock', on_delete=models.CASCADE)
     date = models.DateField()
+    current_price = models.DecimalField()
     price_open = models.DecimalField()
     day_high = models.DecimalField()
     day_low = models.DecimalField()
     high_52_weeks = models.DecimalField()
     low_52_weeks = models.DecimalField()
+    time_zone = models.CharField()
+    volume = models.IntegerField()
 
     # temporary solution is to aggregate daily data into one json
     # to avoid storing a huge amount of data, will revisit
-    price_data = models.JSONField()
+    price_data = JSONField()
