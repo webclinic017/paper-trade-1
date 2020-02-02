@@ -3,8 +3,10 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    custom_field = 5
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
