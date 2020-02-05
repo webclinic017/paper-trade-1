@@ -5,7 +5,7 @@ from paper_robin.apps.user.models import User, UserProfile
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'custom_field']
+        fields = ['id', 'first_name', 'last_name']
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
