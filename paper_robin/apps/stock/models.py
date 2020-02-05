@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
-''' Example of what we're working with, similar across services
+""" Example of what we're working with, similar across services
 {
     "symbols_requested": 1,
     "symbols_returned": 1,
@@ -35,7 +35,7 @@ from django.db import models
         }
     ]
 }
-'''
+"""
 
 
 class Stock(models.Model):
@@ -44,7 +44,7 @@ class Stock(models.Model):
 
 
 class DailyStockData(models.Model):
-    symbol = models.ForeignKey('Stock', on_delete=models.CASCADE)
+    symbol = models.ForeignKey("Stock", on_delete=models.CASCADE)
     date = models.DateField()
     current_price = models.DecimalField()
     price_open = models.DecimalField()

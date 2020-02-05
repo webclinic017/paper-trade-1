@@ -5,8 +5,8 @@ contain namespaces for the active versions of the API.
 """
 from django.urls import include, path
 
-app_name = 'api'
+app_name = "api"
 
 urlpatterns = [
-    path('v1/', include('paper_robin.apps.api.v1.urls')),
+    path("v1/", include("paper_robin.apps.api.v1.urls")),
 ]

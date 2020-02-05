@@ -18,8 +18,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('paper_robin.apps.api.urls', namespace='api')),
+    path("admin/", admin.site.urls),
+    path("api/", include("paper_robin.apps.api.urls", namespace="api")),
 ]
 
 # Serving static files in development
