@@ -11,6 +11,8 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+  redis:
+    image: "redis:alpine"
   web:
     build: .
     restart: always
@@ -24,6 +26,27 @@ services:
       - ./.env.dev
     depends_on:
       - db
+      - redis
+  celery:
+    build: .
+    command: celery -A paper_robin worker -l info
+    volumes: 
+      - .:/code/
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+  celery-beat:
+    build: .
+    command: celery -A paper_robin beat -l info
+    volumes:
+      - .:/code
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
       
 volumes:
   postgres_data:

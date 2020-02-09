@@ -6,7 +6,7 @@ from paper_robin.apps.stock.api.serializers import StockSerializer, DailyStockDa
 
 class StockViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    A viewset for viewing and editing stock instances.
+    A viewset for viewing stock instances.
     """
 
     serializer_class = StockSerializer
@@ -15,7 +15,7 @@ class StockViewSet(viewsets.ReadOnlyModelViewSet):
 
 class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    A viewset for viewing and editing user instances.
+    A viewset for viewing user instances.
     """
 
     serializer_class = DailyStockDataSerializer
