@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "paper_robin.apps.api",
     "paper_robin.apps.user",
+    "paper_robin.apps.stock",
 ]
 
 MIDDLEWARE = [

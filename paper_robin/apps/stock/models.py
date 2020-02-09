@@ -46,14 +46,15 @@ class Stock(models.Model):
 class DailyStockData(models.Model):
     symbol = models.ForeignKey("Stock", on_delete=models.CASCADE)
     date = models.DateField()
-    current_price = models.DecimalField()
-    price_open = models.DecimalField()
-    day_high = models.DecimalField()
-    day_low = models.DecimalField()
-    high_52_weeks = models.DecimalField()
-    low_52_weeks = models.DecimalField()
-    time_zone = models.CharField()
+    current_price = models.DecimalField(decimal_places=2, max_digits=5) # all U.S. securities trade to 2 decimal places
+    price_open = models.DecimalField(decimal_places=2, max_digits=5)
+    day_high = models.DecimalField(decimal_places=2, max_digits=5)
+    day_low = models.DecimalField(decimal_places=2, max_digits=5)
+    high_52_weeks = models.DecimalField(decimal_places=2, max_digits=5)
+    low_52_weeks = models.DecimalField(decimal_places=2, max_digits=5)
+    time_zone = models.CharField(max_length=50)
     volume = models.IntegerField()
+    volume_avg = models.IntegerField()
 
     # temporary solution is to aggregate daily data into one json
     # to avoid storing a huge amount of data, will revisit
