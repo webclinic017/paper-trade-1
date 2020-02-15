@@ -9,34 +9,54 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Stock',
+            name="Stock",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('symbol', models.CharField(max_length=15, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("symbol", models.CharField(max_length=15, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='DailyStockData',
+            name="DailyStockData",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('current_price', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('price_open', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('day_high', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('day_low', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('high_52_weeks', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('low_52_weeks', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('time_zone', models.CharField(max_length=50)),
-                ('volume', models.IntegerField()),
-                ('volume_avg', models.IntegerField()),
-                ('price_data', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('symbol', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stock.Stock')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("current_price", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("price_open", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("day_high", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("day_low", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("high_52_weeks", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("low_52_weeks", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("time_zone", models.CharField(max_length=50)),
+                ("volume", models.IntegerField()),
+                ("volume_avg", models.IntegerField()),
+                ("price_data", django.contrib.postgres.fields.jsonb.JSONField()),
+                (
+                    "symbol",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stock.Stock"
+                    ),
+                ),
             ],
         ),
     ]

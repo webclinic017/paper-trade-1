@@ -46,7 +46,9 @@ class Stock(models.Model):
 class DailyStockData(models.Model):
     symbol = models.ForeignKey("Stock", on_delete=models.CASCADE)
     date = models.DateField()
-    current_price = models.DecimalField(decimal_places=2, max_digits=5) # all U.S. securities trade to 2 decimal places
+    current_price = models.DecimalField(
+        decimal_places=2, max_digits=5
+    )  # all U.S. securities trade to 2 decimal places
     price_open = models.DecimalField(decimal_places=2, max_digits=5)
     day_high = models.DecimalField(decimal_places=2, max_digits=5)
     day_low = models.DecimalField(decimal_places=2, max_digits=5)
