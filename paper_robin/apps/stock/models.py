@@ -1,5 +1,8 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from model_utils.models import TimeStampedModel
+
+from paper_robin.apps.user.models import User
 
 
 """ Example of what we're working with, similar across services
@@ -38,12 +41,27 @@ from django.db import models
 """
 
 
-class Stock(models.Model):
+class Stock(TimeStampedModel):
     name = models.CharField(max_length=255)
     symbol = models.CharField(max_length=15, unique=True)
 
 
-class DailyStockData(models.Model):
+class StockPortfolio(TimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    principal = models.DecimalField(decimal_places=2, max_digits=15)
+    purchasing_power = models.DecimalField(decimal_places=2, max_digits=15, default=0)
+
+
+class StockPosition(TimeStampedModel):
+    portfolio = models.ForeignKey(StockPortfolio, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    shares = models.IntegerField()
+    purchase_price = models.DecimalField(decimal_places=2, max_digits=5)
+
+#class OptionsPosition(models.Model)
+
+
+class DailyStockData(TimeStampedModel):
     symbol = models.ForeignKey("Stock", on_delete=models.CASCADE)
     date = models.DateField()
     current_price = models.DecimalField(
