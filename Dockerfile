@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y vim dos2unix netcat
  
 # Used when developing locally on windows :/
 RUN dos2unix /code/entrypoint.sh
-RUN ["chmod", "+x", "/code/entrypoint.sh"]
+
+ENTRYPOINT ["/code/entrypoint.sh"]
 
 EXPOSE 8000

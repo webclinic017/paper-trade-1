@@ -17,7 +17,6 @@ services:
     build: .
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
-    entrypoint: /code/entrypoint.sh
     volumes:
       - .:/code/
     ports:

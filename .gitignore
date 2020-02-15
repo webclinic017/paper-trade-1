@@ -27,6 +27,7 @@ pip-log.txt
 
 # Django
 default.db
+db.sqlite3
 
 # Static assets
 media/cache/
