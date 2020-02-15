@@ -1,6 +1,7 @@
 *.py[cod]
 
 *.log
+*.pid
 
 # C extensions
 *.so
@@ -47,9 +48,6 @@ unittests.xml
 !django.mo
 !djangojs.po
 !djangojs.mo
-course_discovery/conf/locale/fake*/LC_MESSAGES/*.po
-course_discovery/conf/locale/fake*/LC_MESSAGES/*.mo
-course_discovery/conf/locale/messages.mo
 
 
 # Mr Developer
@@ -86,11 +84,8 @@ private.py
 
 .cache/
 .dev/
-course_discovery/media/
-course_discovery/static/bower_components/
 docs/_build/
 node_modules/
-course_discovery/static/bundles/
 webpack-stats.json
 
 # Visual Studio Code
@@ -98,3 +93,4 @@ webpack-stats.json
 
 # Emacs
 *~
+celerybeat-schedule
