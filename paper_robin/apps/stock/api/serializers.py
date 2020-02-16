@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from paper_robin.apps.stock.models import Stock, DailyStockData
+from paper_robin.apps.stock.models import (
+    DailyStockData,
+    Stock,
+    StockPortfolio,
+    StockPosition,
+)
 
 
 class StockSerializer(serializers.ModelSerializer):
@@ -12,6 +17,7 @@ class DailyStockDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyStockData
         fields = [
+            "id",
             "symbol",
             "date",
             "current_price",
@@ -25,3 +31,15 @@ class DailyStockDataSerializer(serializers.ModelSerializer):
             "volume_avg",
             "price_data",
         ]
+
+
+class StockPortfolioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockPortfolio
+        fields = ["id", "user", "principal", "purchasing_power"]
+
+
+class StockPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockPosition
+        fields = ["id", "portfolio", "stock", "shares", "purchase_price"]

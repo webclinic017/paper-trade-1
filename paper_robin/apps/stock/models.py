@@ -58,7 +58,8 @@ class StockPosition(TimeStampedModel):
     shares = models.IntegerField()
     purchase_price = models.DecimalField(decimal_places=2, max_digits=5)
 
-#class OptionsPosition(models.Model)
+
+# class OptionsPosition(models.Model)
 
 
 class DailyStockData(TimeStampedModel):

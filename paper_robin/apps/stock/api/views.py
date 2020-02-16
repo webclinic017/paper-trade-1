@@ -1,9 +1,17 @@
 from rest_framework import viewsets, permissions
 
-from paper_robin.apps.stock.models import Stock, DailyStockData
+
+from paper_robin.apps.stock.models import (
+    DailyStockData,
+    Stock,
+    StockPortfolio,
+    StockPosition,
+)
 from paper_robin.apps.stock.api.serializers import (
-    StockSerializer,
     DailyStockDataSerializer,
+    StockPortfolioSerializer,
+    StockPositionSerializer,
+    StockSerializer,
 )
 
 
@@ -23,3 +31,21 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
 
     serializer_class = DailyStockDataSerializer
     queryset = DailyStockData.objects.all()
+
+
+class StockPortfolioViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing stock portfolio instances.
+    """
+
+    serializer_class = StockPortfolioSerializer
+    queryset = StockPortfolio.objects.all()
+
+
+class StockPositionViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing stock position instances.
+    """
+
+    serializer_class = StockPositionSerializer
+    queryset = StockPosition.objects.all()
