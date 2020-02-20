@@ -4,7 +4,6 @@ FROM python:3
 ENV PYTHONUNBUFFERED 1
 
 # Work directory
-RUN mkdir /code
 WORKDIR /code
 
 # Install dependencies
