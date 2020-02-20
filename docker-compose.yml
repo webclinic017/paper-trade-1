@@ -13,38 +13,38 @@ services:
       - POSTGRES_PASSWORD=password
   redis:
     image: "redis:alpine"
-  web:
-    build: .
+  api:
+    build: ./backend
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code/
+      - ./backend/:/code/
     ports:
       - "8000:8000"
     env_file:
-      - ./.env.dev
+      - ./backend/.env.dev
     environment:
       - RUN_ENTRYPOINT=true
     depends_on:
       - db
       - redis
   celery:
-    build: .
+    build: ./backend
     command: celery -A paper_robin worker -l info
     volumes: 
-      - .:/code/
+      - ./backend/:/code/
     env_file:
-      - ./.env.dev
+      - ./backend/.env.dev
     depends_on:
       - db
       - redis
   celery-beat:
-    build: .
+    build: ./backend
     command: celery -A paper_robin beat -l info
     volumes:
-      - .:/code/
+      - ./backend/:/code/
     env_file:
-      - ./.env.dev
+      - ./backend/.env.dev
     depends_on:
       - db
       - redis
@@ -57,7 +57,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./.env.dev
+      - ./backend/.env.dev
 
 volumes:
   postgres_data:
