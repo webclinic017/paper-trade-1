@@ -1,4 +1,7 @@
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import Q
 
 
 from paper_robin.apps.stock.models import (
@@ -22,6 +25,13 @@ class StockViewSet(viewsets.ReadOnlyModelViewSet):
 
     serializer_class = StockSerializer
     queryset = Stock.objects.all()
+
+    @action(detail=False, methods=['get'], url_path="autocomplete/(?P<q>\w+)")
+    def autocomplete(self, request, q=""):
+        print("wedhasd", q)
+        stocks = Stock.objects.filter(Q(symbol__istartswith=q) | Q(name__istartswith=q)).all()[:10]
+        serializer = self.get_serializer(stocks, many=True)
+        return Response(serializer.data)
 
 
 class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):

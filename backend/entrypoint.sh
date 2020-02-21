@@ -16,7 +16,7 @@ python manage.py makemigrations
 python manage.py migrate
 
 # this should be in docker-compose.yml
-if [ -z "$RUN_ENTRYPOINT" ]
+if ! [ -z "$RUN_ENTRYPOINT" ]
 then
   python manage.py createsuperuser --noinput
   python manage.py upload_sample_data

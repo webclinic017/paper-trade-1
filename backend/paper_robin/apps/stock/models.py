@@ -42,8 +42,8 @@ from paper_robin.apps.user.models import User
 
 
 class Stock(TimeStampedModel):
-    name = models.CharField(max_length=255)
-    symbol = models.CharField(max_length=15, unique=True)
+    symbol = models.CharField(max_length=15, unique=True, db_index=True)
+    name = models.CharField(max_length=255, db_index=True)
 
 
 class StockPortfolio(TimeStampedModel):
