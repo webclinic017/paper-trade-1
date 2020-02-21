@@ -1,11 +1,12 @@
 import os
 import csv
 from datetime import date
+from django.core.management.base import BaseCommand, CommandError
 
 from paper_robin.apps.stock.models import DailyStockData, Stock
 from paper_robin.settings import BASE_DIR
+from paper_robin.data.utils import time_string_to_utc_epoch
 
-from django.core.management.base import BaseCommand, CommandError
 
 
 class Command(BaseCommand):
@@ -32,10 +33,11 @@ class Command(BaseCommand):
 
             price_data = {}
             for row in csv_reader:
-                timestamp = row[0].split(" ")[1]
-                price_data[timestamp] = row[1]
+                time_stamp = time_string_to_utc_epoch(row[0], 'EST')
+                price_data[time_stamp] = row[1]
 
-            daily_stock_data = DailyStockData.objects.create(
+        
+            DailyStockData.objects.create(
                 symbol=snap_stock,
                 date=date(2020, 2, 13),
                 current_price=17.59,
