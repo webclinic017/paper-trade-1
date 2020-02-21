@@ -5,17 +5,15 @@ import { Form, FormControl } from 'react-bootstrap';
 import './Search.css';
 
 class Search extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            suggestions: [],
-            cancelSource: null
-        };
-    }
+    state = {
+        searchString: '',
+        suggestions: [],
+        cancelSource: null
+    }  
 
     handleChange = () => {
         const searchValue = this.refs.search.value;
+        this.setState({ searchString: searchValue});
 
         if (searchValue !== '') {
             try {
@@ -42,28 +40,46 @@ class Search extends Component {
                 }
             });
         } else {
-            this.setState({ suggestions: [] })
+            this.setState({ searchString: '', suggestions: [] });
         };
     }
 
     select = () => {
-        this.refs.search.value = '';
         this.setState({
+            searchString: '',
             suggestions: [],
             cancelSource: null
         });
     }
 
-    render() {      
+    highlight = (searchString, value) => {
+        if (value.startsWith(searchString)) {
+            return (
+                <>
+                    <span className="text-danger">
+                        {searchString}
+                    </span>
+                    <span>
+                        { value.substring(value.indexOf(searchString) + searchString.length + 1) }
+                    </span>
+                </>
+            );
+        } else {
+            return value;
+        }
+    };
 
+    render() {      
         const suggestions = (
-                <ul className="list-group">
+                <ul className='list-group'>
                     {this.state.suggestions.map(s => {
                     return (
-                        <li className="list-group-item text-white bg-transparent"
+                        <li className='list-group-item text-white bg-transparent'
                             key={s.id} onClick={this.select}
                         >
-                            ({s.symbol}) {s.name}
+                            ({this.highlight(this.state.searchString, s.symbol.toLowerCase())})
+                            &nbsp;
+                            {this.highlight(this.state.searchString, s.name.toLowerCase())}
                         </li>
                     );
                     })}
@@ -71,9 +87,9 @@ class Search extends Component {
             );
 
         return (
-            <Form className="search">
+            <Form className='search'>
                 <FormControl 
-                    type="text" ref="search" placeholder="Search" onChange={this.handleChange} 
+                    type='text' ref='search' placeholder='Search' onChange={this.handleChange} 
                 />
                 { suggestions }
             </Form>
