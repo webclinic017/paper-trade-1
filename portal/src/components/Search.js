@@ -53,11 +53,11 @@ class Search extends Component {
     }
 
     highlight = (searchString, value) => {
-        if (value.startsWith(searchString)) {
+        if (value.toLowerCase().startsWith(searchString.toLowerCase())) {
             return (
                 <>
                     <span className="text-danger">
-                        {searchString}
+                        {searchString.toUpperCase()}
                     </span>
                     <span>
                         { value.substring(value.indexOf(searchString) + searchString.length + 1) }
@@ -77,9 +77,9 @@ class Search extends Component {
                         <li className='list-group-item text-white bg-transparent'
                             key={s.id} onClick={this.select}
                         >
-                            ({this.highlight(this.state.searchString, s.symbol.toLowerCase())})
+                            ({this.highlight(this.state.searchString, s.symbol)})
                             &nbsp;
-                            {this.highlight(this.state.searchString, s.name.toLowerCase())}
+                            {this.highlight(this.state.searchString, s.name)}
                         </li>
                     );
                     })}
