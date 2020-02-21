@@ -1,24 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+
 import './App.css';
+import Nav from './components/Nav'
+
+const Home = () => (
+  <div>
+    homepage
+  </div>
+)
+
+const Profile = () => (
+  <div>
+    Profile
+  </div>
+)
 
 const App = () => (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reloadsawsssdsads
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Reacts
-        </a>
-      </header>
-    </div>
+  <div className="app">
+    <Router>
+      <div>
+        <Nav />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/profile" component={Profile} />
+        </Switch>
+      </div>
+    </Router>
+  </div>
 );
 
 export default App;
