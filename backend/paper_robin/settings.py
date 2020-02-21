@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default_allowed_hosts).sp
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,9 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "drf_yasg",
     "rest_framework",
     "rest_framework.authtoken",
-    "drf_yasg",
     "paper_robin.apps.api",
     "paper_robin.apps.user",
     "paper_robin.apps.stock",
@@ -52,11 +53,18 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+    "http://127.0.0.1:8000"
 ]
 
 ROOT_URLCONF = "paper_robin.urls"

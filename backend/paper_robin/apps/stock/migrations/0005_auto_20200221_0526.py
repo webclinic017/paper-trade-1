@@ -6,26 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stock', '0004_auto_20200221_0347'),
+        ("stock", "0004_auto_20200221_0347"),
     ]
 
     operations = [
+        migrations.RemoveIndex(model_name="stock", name="stock_stock_name_5983b0_idx",),
         migrations.RemoveIndex(
-            model_name='stock',
-            name='stock_stock_name_5983b0_idx',
-        ),
-        migrations.RemoveIndex(
-            model_name='stock',
-            name='stock_stock_symbol_d3f9ae_idx',
+            model_name="stock", name="stock_stock_symbol_d3f9ae_idx",
         ),
         migrations.AlterField(
-            model_name='stock',
-            name='name',
+            model_name="stock",
+            name="name",
             field=models.CharField(db_index=True, max_length=255),
         ),
         migrations.AlterField(
-            model_name='stock',
-            name='symbol',
+            model_name="stock",
+            name="symbol",
             field=models.CharField(db_index=True, max_length=15, unique=True),
         ),
     ]

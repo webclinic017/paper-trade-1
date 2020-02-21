@@ -1,17 +1,16 @@
 import React from 'react';
+import { Nav, Navbar } from 'react-bootstrap';
 
-import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
+import Search from './Search'; 
 
 const NavComponent = () => (
     <Navbar variant="dark">
-        <div className="row w-100">
-            <div className="col-3">
+        <div className="row w-100 mt-1">
+            <div className="col-2">
                 <Navbar.Brand href="/"  >Navbar</Navbar.Brand>
             </div>
-            <div className="col-3">
-                <Form>
-                    <FormControl type="text" placeholder="Search"/>
-                </Form>
+            <div className="col-4">
+                <Search />
             </div>
             <div className="col-6">
                 <Nav className="float-right">

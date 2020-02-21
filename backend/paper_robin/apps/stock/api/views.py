@@ -26,10 +26,16 @@ class StockViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = StockSerializer
     queryset = Stock.objects.all()
 
-    @action(detail=False, methods=['get'], url_path="autocomplete/(?P<q>\w+)")
+    def get_permissions(self):
+        if self.action == 'autocomplete':
+            return [permissions.AllowAny(), ]        
+        return super(StockViewSet, self).get_permissions()
+
+    @action(detail=False, methods=["get"], url_path="autocomplete/(?P<q>\w+)")
     def autocomplete(self, request, q=""):
-        print("wedhasd", q)
-        stocks = Stock.objects.filter(Q(symbol__istartswith=q) | Q(name__istartswith=q)).all()[:10]
+        stocks = Stock.objects.filter(
+            Q(symbol__istartswith=q) | Q(name__istartswith=q)
+        ).all()[:10]
         serializer = self.get_serializer(stocks, many=True)
         return Response(serializer.data)
 
