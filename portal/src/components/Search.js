@@ -8,12 +8,13 @@ class Search extends Component {
     state = {
         searchString: '',
         suggestions: [],
-        cancelSource: null
+        showSuggestions: false,
+        cancelSource: null,
     }  
 
     handleChange = () => {
         const searchValue = this.refs.search.value;
-        this.setState({ searchString: searchValue});
+        this.setState({ searchString: searchValue, showSuggestions: true });
 
         if (searchValue !== '') {
             try {
@@ -40,7 +41,7 @@ class Search extends Component {
                 }
             });
         } else {
-            this.setState({ searchString: '', suggestions: [] });
+            this.setState({ searchString: '', suggestions: [], showSuggestions: false });
         };
     }
 
@@ -68,9 +69,16 @@ class Search extends Component {
             return value;
         }
     };
+    
+    hideSuggestions = () => {
+        this.setState({showSuggestions: false});
+    }
 
     render() {      
-        const suggestions = (
+        let suggestions;
+
+        if (this.state.suggestions.length > 0) {
+            suggestions = (
                 <ul className='list-group'>
                     {this.state.suggestions.map(s => {
                     return (
@@ -85,13 +93,20 @@ class Search extends Component {
                     })}
                 </ul>
             );
+        } else {
+            suggestions = (
+                <li className='list-group-item text-secondary bg-transparent disabled'>
+                    We were unable to find any results for your search.
+                </li>
+            );
+        }
 
         return (
             <Form className='search'>
                 <FormControl 
-                    type='text' ref='search' placeholder='Search' onChange={this.handleChange} 
+                    type='text' ref='search' placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions} 
                 />
-                { suggestions }
+                {this.state.showSuggestions ? suggestions : null}
             </Form>
         );
     }
