@@ -1,7 +1,9 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
+
+import { simpleAction } from '../actions/simpleAction';
 
 const options = {
     title: {
@@ -51,14 +53,14 @@ const options = {
         name: 'AAPL',
         type: 'area',
         data: [
-            [1318607520000,420.258,420.35,420.17,420.21],
-            [1318607580000,420.2,420.35,420.18,420.28],
-            [1318607640000,420.3,420.6,420.29,420.5958],
-            [1318607700000,420.58,421.14,420.575,421.0975],
-            [1318607760000,421.07,421.49,420.7,421.46],
-            [1318607820000,421.4601,421.71,421.36,421.69],
-            [1318607880000,421.69,421.94,421.663,421.94],
-            [1318607940000,421.94,422,421.8241,422]
+            [1318607520000,420.258],
+            [1318607580000,420.222],
+            [1318607640000,420.3],
+            [1318607700000,420.58],
+            [1318607760000,421.07],
+            [1318607820000,421.4601],
+            [1318607880000,421.69,421.94],
+            [1318607940000,421.94,422]
             ],
         gapSize: 5,
         tooltip: {
@@ -80,12 +82,19 @@ const options = {
     }]
   };
   
-const Chart = () => (
-    <HighchartsReact
-      highcharts={Highcharts}
-      constructorType={'stockChart'}
-      options={options}
-    />
+const mapDispatchToProps = dispatch => ({
+    simpleAction: () => dispatch(simpleAction())
+})
+
+const Chart = (props) => (
+    <>
+        <button onClick={() => props.simpleAction()}>Test redux action</button>
+        <HighchartsReact
+        highcharts={Highcharts}
+        constructorType={'stockChart'}
+        options={options}
+        />
+    </>
 );
 
-export default Chart;
+export default connect(null, mapDispatchToProps)(Chart);
