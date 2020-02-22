@@ -48,6 +48,15 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = DailyStockDataSerializer
     queryset = DailyStockData.objects.all()
 
+    def list(self, request, *args, **kwargs):
+        query_params = request.query_params
+        if 'date' in query_params:
+            data = DailyStockData.objects.filter(date=query_params['date'])
+            serializer = self.get_serializer(data, many=True)
+            return Response(serializer.data)
+
+        return super().list(request, *args, **kwargs)
+
 
 class StockPortfolioViewSet(viewsets.ModelViewSet):
     """

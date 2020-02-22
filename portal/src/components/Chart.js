@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
-import { simpleAction } from '../actions/simpleAction';
+import { loadDailyDataAction } from '../actions/stockAction';
+
+const utcToLocalTimestamp = (timestamp) => {
+    const offset = new Date().getTimezoneOffset()
+    const localTimestamp = timestamp - (offset * 60);
+
+    // format that high chart uses
+    return localTimestamp * 1000;
+};
 
 const options = {
     title: {
@@ -53,15 +61,13 @@ const options = {
         name: 'AAPL',
         type: 'area',
         data: [
-            [1318607520000,420.258],
-            [1318607580000,420.222],
-            [1318607640000,420.3],
-            [1318607700000,420.58],
-            [1318607760000,421.07],
-            [1318607820000,421.4601],
-            [1318607880000,421.69,421.94],
-            [1318607940000,421.94,422]
-            ],
+            [utcToLocalTimestamp(1580913000),420.258],
+            [utcToLocalTimestamp(1580913060),420.222],
+            [utcToLocalTimestamp(1580913120),420.3],
+            [utcToLocalTimestamp(1580913180),420.58],
+            [utcToLocalTimestamp(1580913240),421.07],
+            [utcToLocalTimestamp(1580913300),421.4601]
+        ],
         gapSize: 5,
         tooltip: {
             valueDecimals: 2
@@ -82,19 +88,34 @@ const options = {
     }]
   };
   
+
 const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction())
+    loadDailyDataAction: () => dispatch(loadDailyDataAction())
 })
 
-const Chart = (props) => (
-    <>
-        <button onClick={() => props.simpleAction()}>Test redux action</button>
-        <HighchartsReact
-        highcharts={Highcharts}
-        constructorType={'stockChart'}
-        options={options}
-        />
-    </>
-);
+class Chart extends Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
+
+    componentDidMount() {
+        console.log("mounted")
+    }
+
+    render() {
+        return (
+            <>
+                <button onClick={() => this.props.loadDailyDataAction()}>Test redux action</button>
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    constructorType={'stockChart'}
+                    options={options}
+                />
+            </>
+        );
+    }
+}
 
 export default connect(null, mapDispatchToProps)(Chart);
