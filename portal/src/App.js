@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import './App.css';
-import { Chart, Nav, PrivateComponent, PrivateRoute } from './components';
+import { Chart, LoginPage, Nav, PrivateComponent, PrivateRoute } from './components';
 
 const Home = () => (
   <div>
@@ -25,6 +25,7 @@ const App = () => (
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/profile" component={Profile} />
+          <Route path='/login' component={LoginPage} />
         </Switch>
       </div>
     </Router>
