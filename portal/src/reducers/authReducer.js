@@ -1,13 +1,14 @@
 const initialState = {
-    'stocks': []
+    'loggedIn': false
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case 'LOAD_DAILY_DATA_ACTION':
+        case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                'stocks': []
+                loggedIn: true,
+                bob: 'wtf'
             }
         default: return state
     }

@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './Login.css'
+import { login } from '../actions/authAction';
+
+const mapDispatchToProps = dispatch => ({
+    login: (username, password) => dispatch(login(username, password))
+})
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -27,19 +32,21 @@ class LoginPage extends React.Component {
         this.setState({ submitted: true });
         const { username, password } = this.state;
         if (username && password) {
-            this.props.login(username, password);
+            this.props.login(username, password)
+                .then(res => this.props.history.push('/'));
         }
     }
 
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
+
         return (
             <div className="row bg-white vh-100">
-                <div className="col-6 login-left"></div>
-                <div className="col-6 d-flex align-items-center justify-content-center">
+                <div className="col-12 col-md-6 login-left"></div>
+                <div className="col-12 col-md-6 d-flex align-items-center justify-content-center bg-green">
                     <form name="form" onSubmit={this.handleSubmit}>
-                        <h2 className="font-weight-bold">Welcome to PaperRobin</h2>
+                        <h2 className="font-weight-bold mb-3">Welcome to PaperRobin</h2>
                         <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                             <label htmlFor="username">Username</label>
                             <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
@@ -68,4 +75,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage;
+export default connect(null, mapDispatchToProps)(LoginPage);

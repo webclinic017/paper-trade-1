@@ -1,12 +1,14 @@
 
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
+import { connect } from 'react-redux';
 
+const mapStateToProps = (state) => {
+    const { loggedIn } = state.authReducer;
+    return { isLoggedIn: loggedIn };
+};
 /** Redirects an unathenticated user to login page */
-const PrivateRoute = ({ component: Component, ...rest }) => {
-
-  const isLoggedIn = false;
-
+const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -21,4 +23,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   )
 }
 
-export default PrivateRoute
+export default connect(mapStateToProps, null)(PrivateRoute);
