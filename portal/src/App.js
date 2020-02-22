@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import './App.css';
-import Nav from './components/Nav';
-import Chart from './components/Chart';
+import { Chart, Nav, PrivateComponent, PrivateRoute } from './components';
 
 const Home = () => (
   <div>
@@ -22,10 +21,10 @@ const App = () => (
   <div className="app">
     <Router>
       <div>
-        <Nav />
+        <PrivateComponent component={Nav} />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/profile" component={Profile} />
+          <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute path="/profile" component={Profile} />
         </Switch>
       </div>
     </Router>
