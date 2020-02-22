@@ -1,3 +1,7 @@
 import { getAccessToken } from './authService';
+import { loadDailyStockData } from './stockService';
 
-export { getAccessToken };
+export { 
+    getAccessToken,
+    loadDailyStockData
+};

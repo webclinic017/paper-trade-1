@@ -7,8 +7,7 @@ export default (state = initialState, action) => {
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                loggedIn: true,
-                bob: 'wtf'
+                loggedIn: true
             }
         default: return state
     }
