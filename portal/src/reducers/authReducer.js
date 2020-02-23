@@ -1,5 +1,14 @@
+import { validateToken } from '../services';
+
+validateToken().then().catch(
+    error => {
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
+    }
+);
+
 const initialState = {
-    'loggedIn': false
+    'loggedIn': sessionStorage.getItem('accessToken') !== null
 }
 
 export default (state = initialState, action) => {

@@ -1,5 +1,5 @@
 const initialState = {
-    'stocks': []
+    'dailyData': {}
 }
 
 export default (state = initialState, action) => {
@@ -7,7 +7,7 @@ export default (state = initialState, action) => {
         case 'LOAD_DAILY_DATA_ACTION':
             return {
                 ...state,
-                'stocks': []
+                'dailyData': { ...state.dailyData, ...action.payload }
             }
         default: return state
     }

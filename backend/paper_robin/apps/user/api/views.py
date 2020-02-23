@@ -1,4 +1,6 @@
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from paper_robin.apps.user.models import User, UserProfile
 from paper_robin.apps.user.api.serializers import UserSerializer, UserProfileSerializer
@@ -27,6 +29,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return [pc() for pc in permission_classes]
 
+    @action(detail=False, methods=["get"], url_path="me")
+    def me(self, request):
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data)
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """

@@ -1,15 +1,23 @@
 import axios from 'axios';
 import { loadDailyStockData } from '../services';
 
-const token = sessionStorage.getItem('accessToken');
-axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-
 export const loadDailyDataAction = (symbol, date) => dispatch => {
+    const token = sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+
     return loadDailyStockData(symbol, date)
         .then(res => {
-            dispatch({
-                type: 'LOAD_DAILY_DATA_ACTION',
-                payload: res.data
-            })
+            const data = res.data
+
+            // could have a normalize function here
+            if (data.length > 0) {
+                const normalizedData = { [data[0].symbol]: data[0] };
+                dispatch({
+                    type: 'LOAD_DAILY_DATA_ACTION',
+                    payload: normalizedData
+                })
+            } 
+        
+            return Promise.resolve(data[0])
         }).catch(error => console.log('Failed to fetch daily data'));
 }

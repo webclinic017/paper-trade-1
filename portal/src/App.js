@@ -5,9 +5,10 @@ import './App.css';
 import { Chart, LoginPage, Nav, PrivateComponent, PrivateRoute } from './components';
 
 const Home = () => (
-  <div>
-    homepage
-    <Chart />
+  <div className='row'>
+    <div className="offset-1 col-6">
+      <Chart />
+    </div>
   </div>
 )
 
