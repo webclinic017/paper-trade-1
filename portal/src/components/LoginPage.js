@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { axios } from '../services';
 import { login } from '../actions/authAction';
 
 const mapDispatchToProps = dispatch => ({
@@ -32,7 +33,11 @@ class LoginPage extends React.Component {
         const { username, password } = this.state;
         if (username && password) {
             this.props.login(username, password)
-                .then(res => this.props.history.push('/'));
+                .then(res => {
+                    const token = sessionStorage.getItem('accessToken');
+                    axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+                    this.props.history.push('/')
+                });
         }
     }
 

@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { axios } from '../services';
 
 export const getAccessToken = (username, password) => (
-    axios.post('http://127.0.0.1:8000/api/v1/token/', {
+    axios.post('/token/', {
             username: username,
             password: password
         }).then(res => res.data)
@@ -11,7 +11,7 @@ export const getAccessToken = (username, password) => (
 export const validateToken = () => { 
     const token = sessionStorage.getItem('accessToken');
 
-    return axios.get('http://127.0.0.1:8000/api/v1/users/me/', {
+    return axios.get('/users/me/', {
          headers: {"Authorization" : `Bearer ${token}`}
         })
         .then(res => res.data)

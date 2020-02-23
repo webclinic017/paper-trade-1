@@ -1,9 +1,6 @@
-import axios from 'axios';
 import { loadDailyStockData } from '../services';
 
 export const loadDailyDataAction = (symbol, date) => dispatch => {
-    const token = sessionStorage.getItem('accessToken');
-    axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
 
     return loadDailyStockData(symbol, date)
         .then(res => {

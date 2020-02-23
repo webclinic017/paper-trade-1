@@ -1,5 +1,5 @@
-import axios from 'axios';
+import { axios } from '../services';
 
 export const loadDailyStockData = (symbol, date) => 
-    axios.get(`http://127.0.0.1:8000/api/v1/daily_stock_data/?symbol=${symbol}&date=${date}`);
+    axios.get(`/daily_stock_data/?symbol=${symbol}&date=${date}`);
 

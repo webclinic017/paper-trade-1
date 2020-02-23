@@ -1,6 +1,11 @@
+import { axios } from '../services';
+
 import { validateToken } from '../services';
 
-validateToken().then().catch(
+validateToken().then(res => {
+    const token = sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+}).catch(
     error => {
         sessionStorage.removeItem('accessToken');
         sessionStorage.removeItem('refreshToken');
