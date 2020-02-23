@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Form, FormControl } from 'react-bootstrap';
 
-import './Search.css';
-
 class Search extends Component {
     state = {
         searchString: '',

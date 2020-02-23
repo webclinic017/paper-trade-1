@@ -7,7 +7,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store';
 
-import './index.css';
+import './static/css/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 render(
