@@ -5,15 +5,11 @@ export const getAccessToken = (username, password) => (
             username: username,
             password: password
         }).then(res => res.data)
-        .catch(error => console.log('Failed to login'))
+        .catch(error => Promise.reject(error))
 );
 
 export const validateToken = () => { 
-    const token = sessionStorage.getItem('accessToken');
-
-    return axios.get('/users/me/', {
-         headers: {"Authorization" : `Bearer ${token}`}
-        })
+    return axios.get('/users/me/')
         .then(res => res.data)
-        .catch(error => Promise.reject())
+        .catch(error => Promise.reject(error))
 }

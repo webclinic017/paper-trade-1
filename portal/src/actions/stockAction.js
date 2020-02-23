@@ -16,5 +16,5 @@ export const loadDailyDataAction = (symbol, date) => dispatch => {
             } 
         
             return Promise.resolve(data[0])
-        }).catch(error => console.log('Failed to fetch daily data'));
+        }).catch(error => Promise.reject(error));
 }

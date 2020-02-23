@@ -65,7 +65,6 @@ class Chart extends Component {
                     valueDecimals: 2
                 },
                 fillColor: {
-                    linearGradient: ['#1b1b1d', '#1b1b1d', '#1b1b1d', '#1b1b1d'],
                     stops: [
                         [0, '#1b1b1d'],
                         [1, '#1b1b1d']
