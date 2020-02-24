@@ -85,10 +85,17 @@ class Chart extends Component {
                 Object.keys(priceData).forEach(key => {
                     chartData.push([utcToLocalTimestamp(parseFloat(key)), parseFloat(priceData[key])]);
                 });
-                const series = this.state.options.series;
-                series[0].data = chartData;
-                series[0]['color'] = '#f45531';
-                this.setState({options: {...this.state.options, series: series}});
+                let i = 0;
+
+                setInterval(() => {
+                    const series = this.state.options.series;
+                    series[0].data = chartData.slice(0, i);
+                    series[0]['color'] = '#f45531';
+                    this.setState({options: {...this.state.options, series: series}});
+                    i+=1;
+                }, 1000);
+               
+                // this.setState({options: {...this.state.options, series: series}});
             });
     }
 

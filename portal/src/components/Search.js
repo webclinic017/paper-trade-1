@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormControl } from 'react-bootstrap';
 
-import { axios } from '../services';
+import { axios, autocomplete } from '../services';
 
 class Search extends Component {
     state = {
@@ -17,18 +17,16 @@ class Search extends Component {
 
         if (searchValue !== '') {
             try {
-                this.state.cancelSource.cancel('wowo');
+                this.state.cancelSource.cancel();
             } catch(error) {
                 // do nothing
             };
 
-            const CancelToken = axios.CancelToken;
-            const source = CancelToken.source();
+            const cancelToken = axios.CancelToken;
+            const source = cancelToken.source();
             this.setState({ cancelSource: source });
 
-            axios.get(`http://127.0.0.1:8000/api/v1/stocks/autocomplete/${searchValue}`, {
-                cancelToken: source.token
-            }).then(res => {
+            autocomplete(searchValue, source.token).then(res => {
                 this.setState({
                     suggestions: res.data
                 });

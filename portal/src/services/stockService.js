@@ -5,3 +5,9 @@ export const loadDailyStockData = (symbol, date) =>
         params: { symbol, date }
     });
 
+
+export const autocomplete = (q, cancelToken) => {
+    return axios.get(`/stocks/autocomplete/${q}`, {
+        cancelToken: cancelToken 
+    });
+}
