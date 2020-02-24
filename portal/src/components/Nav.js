@@ -4,10 +4,17 @@ import { Nav, Navbar } from 'react-bootstrap';
 import Search from './Search'; 
 
 const NavComponent = () => (
-    <Navbar variant="dark">
-        <div className="row w-100 mt-1">
+    <Navbar>
+        <div className="nav row w-100 mt-1">
             <div className="col-2">
-                <Navbar.Brand href="/"  >Navbar</Navbar.Brand>
+                <Navbar.Brand href="/"  >
+                <img
+                    src="/nav-brand.svg"
+                    width="75"
+                    className="d-inline-block align-top ml-3"
+                    alt="PaperRobin logo"
+                />
+                </Navbar.Brand>
             </div>
             <div className="col-4">
                 <Search />

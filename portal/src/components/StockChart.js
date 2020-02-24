@@ -30,7 +30,8 @@ class Chart extends Component {
                 backgroundColor: '#1b1b1d',
             },
             title: {
-                text: 'AAPL stock price by minute'
+                text: props.title,
+                align: 'left'
             },
             navigator: {
                 enabled: false

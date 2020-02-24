@@ -5,8 +5,8 @@ import { Chart, LoginPage, Nav, PrivateComponent, PrivateRoute } from './compone
 
 const Home = () => (
   <div className='row'>
-    <div className="offset-1 col-6">
-      <Chart />
+    <div className="offset-2 col-6 mt-5">
+      <Chart title='what'/>
     </div>
   </div>
 )

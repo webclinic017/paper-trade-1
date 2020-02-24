@@ -1,4 +1,4 @@
-import Chart from './Chart';
+import Chart from './StockChart';
 import LoginPage from './LoginPage';
 import Nav from './Nav';
 import PrivateComponent from './PrivateComponent'

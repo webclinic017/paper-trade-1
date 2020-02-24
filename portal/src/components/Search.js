@@ -76,19 +76,15 @@ class Search extends Component {
 
         if (this.state.suggestions.length > 0) {
             suggestions = (
-                <ul className='list-group'>
-                    {this.state.suggestions.map(s => {
-                    return (
-                        <li className='list-group-item text-white bg-transparent'
-                            key={s.id} onClick={this.select}
-                        >
-                            ({this.highlight(this.state.searchString, s.symbol)})
-                            &nbsp;
-                            {this.highlight(this.state.searchString, s.name)}
-                        </li>
-                    );
-                    })}
-                </ul>
+                this.state.suggestions.map(s => 
+                    <li className='list-group-item text-white bg-transparent'
+                        key={s.id} onClick={this.select}
+                    >
+                        ({this.highlight(this.state.searchString, s.symbol)})
+                        &nbsp;
+                        {this.highlight(this.state.searchString, s.name)}
+                    </li>
+                )
             );
         } else {
             suggestions = (
@@ -99,11 +95,13 @@ class Search extends Component {
         }
 
         return (
-            <Form className='search'>
+            <Form className='search position-relative'>
                 <FormControl 
                     type='text' ref='search' placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions} 
                 />
-                {this.state.showSuggestions ? suggestions : null}
+                <ul className='list-group search-suggestions'>
+                    { this.state.showSuggestions ? suggestions : null }
+                </ul>
             </Form>
         );
     }
