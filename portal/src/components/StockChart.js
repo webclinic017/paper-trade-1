@@ -28,6 +28,7 @@ class Chart extends Component {
         const options = {
             chart:{
                 backgroundColor: '#1b1b1d',
+                height: props.height,
             },
             title: {
                 text: props.title,
@@ -65,6 +66,7 @@ class Chart extends Component {
                 tooltip: {
                     valueDecimals: 2
                 },
+                enableMouseTracking: !this.props.disableMouseTracking,
                 fillColor: {
                     stops: [
                         [0, '#1b1b1d'],

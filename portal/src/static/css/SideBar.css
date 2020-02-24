@@ -1,0 +1,16 @@
+.side-bar {
+    max-height: 75%;
+    width: 65%;
+    overflow: scroll;
+}
+
+.side-bar .list-group-item {
+    background: #1b1b1d;
+    border: 0;
+    color: #fff;
+}
+
+.side-bar .list-group-item:hover {
+    border: 1px solid #fff !important;
+    cursor: pointer;
+}

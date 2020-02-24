@@ -1,8 +1,7 @@
 .app {
   background: #1b1b1d;
-  height: 100vh;
   width: 100vw;
-  color: #fff;
+  height: 100vh;
 }
 
 .vh-100 {

@@ -1,15 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { Chart, LoginPage, Nav, PrivateComponent, PrivateRoute } from './components';
-
-const Home = () => (
-  <div className='row'>
-    <div className="offset-2 col-6 mt-5">
-      <Chart title='what'/>
-    </div>
-  </div>
-)
+import { HomePage, LoginPage, Nav, PrivateComponent, PrivateRoute } from './components';
 
 const Profile = () => (
   <div>
@@ -23,7 +15,7 @@ const App = () => (
       <div>
         <PrivateComponent component={Nav} />
         <Switch>
-          <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute path="/profile" component={Profile} />
           <Route path='/login' component={LoginPage} />
         </Switch>
