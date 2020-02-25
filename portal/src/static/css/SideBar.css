@@ -1,6 +1,6 @@
 .side-bar {
     max-height: 75%;
-    width: 65%;
+    width: 75%;
     overflow: scroll;
 }
 
@@ -8,6 +8,7 @@
     background: #1b1b1d;
     border: 0;
     color: #fff;
+    border-bottom: 1px solid gray !important;
 }
 
 .side-bar .list-group-item:hover {

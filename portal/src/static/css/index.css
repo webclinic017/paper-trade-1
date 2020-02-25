@@ -2,6 +2,7 @@
 @import './Login.css';
 @import './Nav.css';
 @import './SideBar.css';
+@import './StockChart.css';
 
 body {
   margin: 0;

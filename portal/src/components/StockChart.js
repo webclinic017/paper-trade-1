@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Highcharts, { chart } from 'highcharts/highstock';
+import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
 import { loadDailyDataAction } from '../actions/stockAction';
+import { Button } from 'react-bootstrap';
 
 const utcToLocalTimestamp = (timestamp) => {
     const offset = new Date().getTimezoneOffset()
@@ -30,6 +31,9 @@ class Chart extends Component {
                 backgroundColor: '#1b1b1d',
                 height: props.height,
             },
+            credits: {
+                'enabled': false
+            },
             title: {
                 text: props.title,
                 align: 'left'
@@ -51,6 +55,9 @@ class Chart extends Component {
                     to: Date.UTC(2011, 9, 10, 8),
                     repeat: 7 * 24 * 36e5
                 }]
+            },
+            xAxis: {
+                visible: !this.props.disableXAxis,
             },
             yAxis: {
                 visible: false,
@@ -103,6 +110,16 @@ class Chart extends Component {
     }
 
     render() {
+        const rangeSelector = this.props.allowSelectRange ? (
+            <div className="row range-selector w-75 mx-3">
+                <button className="range-select-1d">1 Day</button>
+                <button className="range-select-1w">1 Week</button>
+                <button className="range-select-3m">3 Month</button>
+                <button className="range-select-1y">1 Year</button>
+                <button className="range-select-all">All</button>
+                <hr className=""/>
+            </div>
+        ) : null
         return (
             <>
                 <HighchartsReact
@@ -110,6 +127,7 @@ class Chart extends Component {
                     constructorType={'stockChart'}
                     options={this.state.options}
                 />
+                {rangeSelector}
             </>
         );
     }

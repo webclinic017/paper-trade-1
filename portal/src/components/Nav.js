@@ -21,9 +21,9 @@ const NavComponent = () => (
             </div>
             <div className="col-6">
                 <Nav className="float-right">
-                    <Nav.Link href="/">Home</Nav.Link>
+                    {/* <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="profile">Profile</Nav.Link>
-                    <Nav.Link href="pricing">Pricing</Nav.Link>
+                    <Nav.Link href="pricing">Pricing</Nav.Link> */}
                 </Nav>
             </div>
         </div>

@@ -1,0 +1,37 @@
+.range-selector button {
+    background: none;
+    border: none;
+    width: 20%;
+    color: #fff;
+    padding: 0.5em;
+}
+
+.range-selector button:hover, .range-selector  button:active:focus {
+    background: none;
+    outline: none;
+}
+
+.range-selector hr {
+    height: .1em;
+    width: 20%;
+    margin: 0;
+    background:green;
+    border: none;
+    transition: .3s ease-in-out;
+}
+
+.range-select-1w:hover ~ hr {
+    margin-left: 20%;
+}
+  
+.range-select-3m:hover ~ hr {
+    margin-left: 40%;
+}
+  
+.range-select-1y:hover ~ hr {
+    margin-left: 60%;
+}
+
+.range-select-all:hover ~ hr {
+    margin-left: 80%;
+}

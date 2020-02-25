@@ -11,7 +11,10 @@ export const loadDailyDataAction = (symbol, date) => dispatch => {
                 const normalizedData = { [data[0].symbol]: data[0] };
                 dispatch({
                     type: 'LOAD_DAILY_DATA_ACTION',
-                    payload: normalizedData
+                    payload: {
+                        dailyData: normalizedData,
+                        currentPrice: { [data[0].symbol]: parseFloat(data[0].current_price) }
+                    }
                 })
             } 
         
