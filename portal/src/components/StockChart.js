@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
-import { loadDailyDataAction } from '../actions/stockAction';
-import { Button } from 'react-bootstrap';
+import { loadDailyDataAction } from '../actions/stockActions';
 
 const utcToLocalTimestamp = (timestamp) => {
     const offset = new Date().getTimezoneOffset()

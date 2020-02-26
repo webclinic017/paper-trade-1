@@ -1,6 +1,10 @@
 import { loadDailyStockData } from '../services';
 
-export const loadDailyDataAction = (symbol, date) => dispatch => {
+export const StockActions = {
+    LOAD_DAILY_DATA_ACTION: 'LOAD_DAILY_DATA_ACTION'
+}
+
+export const loadDailyDataAction = (symbol: string, date: string) => (dispatch: any) => {
 
     return loadDailyStockData(symbol, date)
         .then(res => {
@@ -10,7 +14,7 @@ export const loadDailyDataAction = (symbol, date) => dispatch => {
             if (data.length > 0) {
                 const normalizedData = { [data[0].symbol]: data[0] };
                 dispatch({
-                    type: 'LOAD_DAILY_DATA_ACTION',
+                    type: StockActions.LOAD_DAILY_DATA_ACTION,
                     payload: {
                         dailyData: normalizedData,
                         currentPrice: { [data[0].symbol]: parseFloat(data[0].current_price) }

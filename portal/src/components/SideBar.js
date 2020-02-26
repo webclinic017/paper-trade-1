@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import StockChart from './StockChart';
 import StockPrice from './StockPrice';
-import { updateWatchList } from '../actions/userAction';
+import { updateWatchList } from '../actions/userActions';
 
 const mapDispatchToProps = dispatch => ({
     updateWatchList: (updatedList) => dispatch(updateWatchList(updatedList))

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { axios } from '../services';
-import { login } from '../actions/authAction';
+import { login } from '../actions/authActions';
+
 
 const mapDispatchToProps = dispatch => ({
     login: (username, password) => dispatch(login(username, password))
