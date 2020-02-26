@@ -52,8 +52,8 @@ export const axiosClient = (() => {
         return Promise.reject(error);;
     });
 
-    instance.CancelToken = axios.CancelToken;
-    instance.isCancel = axios.isCancel;
+    (instance as any).CancelToken = axios.CancelToken;
+    (instance as any).isCancel = axios.isCancel;
 
     return instance;
 })();
