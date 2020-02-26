@@ -17,7 +17,8 @@ const utcToLocalTimestamp = (timestamp) => {
 const mapStateToProps = (state) => {
     const { dailyData } = state.stockReducer;
     return { dailyData };
-  };
+};
+
 const mapDispatchToProps = dispatch => ({
     loadDailyDataAction: (symbol, date) => dispatch(loadDailyDataAction(symbol, date))
 })

@@ -14,4 +14,4 @@ const StockPrice = (props) => {
     return currentPrice ?  <div className="btn btn-danger">{moneyFormatter(currentPrice)}</div> : null;
 }
 
-export default connect(mapStateToProps, null)(StockPrice);
+export default connect(mapStateToProps, {})(StockPrice);

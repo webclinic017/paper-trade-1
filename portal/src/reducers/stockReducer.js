@@ -1,6 +1,7 @@
 const initialState = {
     'dailyData': {},
-    'currentPrices': {}
+    'currentPrices': {},
+    'watchList': []
 }
 
 export default (state = initialState, action) => {

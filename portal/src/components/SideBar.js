@@ -1,6 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import StockChart from './StockChart';
 import StockPrice from './StockPrice';
+import { updateWatchList } from '../actions/userAction';
+
+const mapDispatchToProps = dispatch => ({
+    updateWatchList: (updatedList) => dispatch(updateWatchList(updatedList))
+});
 
 /** Renders a list of stocks in a sidebar */
 const SideBar = (props) => {
@@ -20,6 +27,7 @@ const SideBar = (props) => {
                         </li>
                     )}
                 </ul>
+                <button onClick={() => props.updateWatchList(['amd'])}></button>
             </div>
         )
     } else {
@@ -27,4 +35,4 @@ const SideBar = (props) => {
     }
 }
 
-export default SideBar;
+export default connect(null, mapDispatchToProps)(SideBar);
