@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     const { watchList } = state.userReducer;
     return { watchList };
 }
 
-/** Top level component for pollin */
-class Polling extends Component {
-    constructor(props) {
+interface Props {};
+interface State { timerID?: any };
+
+/** Top level component for polling */
+class Polling extends Component<Props, State> {
+    constructor(props: any) {
         super(props);
         this.state = { timerID: null }
     }

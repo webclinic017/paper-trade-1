@@ -8,11 +8,11 @@ class Search extends Component {
         searchString: '',
         suggestions: [],
         showSuggestions: false,
-        cancelSource: null,
+        cancelSource: { cancel: () => null },
     }  
 
     handleChange = () => {
-        const searchValue = this.refs.search.value;
+        const searchValue = (this.refs.search as any).value;
         this.setState({ searchString: searchValue, showSuggestions: true });
 
         if (searchValue !== '') {
@@ -22,7 +22,7 @@ class Search extends Component {
                 // do nothing
             };
 
-            const cancelToken = axios.CancelToken;
+            const cancelToken = (axios as any).CancelToken;
             const source = cancelToken.source();
             this.setState({ cancelSource: source });
 
@@ -31,7 +31,7 @@ class Search extends Component {
                     suggestions: res.data
                 });
             }).catch(function (thrown) {
-                if (axios.isCancel(thrown)) {
+                if ((axios as any).isCancel(thrown)) {
                   console.log('Request canceled', thrown.message);
                 } else {
                   // handle error
@@ -50,7 +50,7 @@ class Search extends Component {
         });
     }
 
-    highlight = (searchString, value) => {
+    highlight = (searchString: string, value: string) => {
         if (value.toLowerCase().startsWith(searchString.toLowerCase())) {
             return (
                 <>
@@ -76,7 +76,7 @@ class Search extends Component {
 
         if (this.state.suggestions.length > 0) {
             suggestions = (
-                this.state.suggestions.map(s => 
+                this.state.suggestions.map((s: { symbol: string, name: string, id: string }) => 
                     <li className='list-group-item text-white bg-transparent'
                         key={s.id} onClick={this.select}
                     >
@@ -97,7 +97,7 @@ class Search extends Component {
         return (
             <Form className='search position-relative'>
                 <FormControl 
-                    type='text' ref='search' placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions} 
+                    type='text' ref={'search' as any} placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions} 
                 />
                 <ul className='list-group search-suggestions'>
                     { this.state.showSuggestions ? suggestions : null }

@@ -4,12 +4,12 @@ import _ from 'lodash';
 
 import { moneyFormatter } from '../utils';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     const { currentPrices } = state.stockReducer;
     return { currentPrices };
 }
 
-const StockPrice = (props) => {
+const StockPrice = (props: any) => {
     const currentPrice = _.get(props.currentPrices, props.symbolId, null);
     return currentPrice ?  <div className="btn btn-danger">{moneyFormatter(currentPrice)}</div> : null;
 }

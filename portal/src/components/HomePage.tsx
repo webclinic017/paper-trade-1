@@ -5,7 +5,7 @@ import SideBar from './SideBar';
 
 import { moneyFormatter } from '../utils'
 
-const HomePage = (props) => (
+const HomePage = (props: any) => (
     <div className='row mt-5'>
         <div className='offset-2 col-6'>
             <div>

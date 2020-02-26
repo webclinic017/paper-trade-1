@@ -3,12 +3,13 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     const { loggedIn } = state.authReducer;
     return { isLoggedIn: loggedIn };
 };
 /** Redirects an unathenticated user to login page */
-const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
+const PrivateRoute = (props: any) => {
+  const { component: Component, isLoggedIn, ...rest } = props;
   return (
     <Route
       {...rest}

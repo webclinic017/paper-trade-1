@@ -5,17 +5,17 @@ import StockChart from './StockChart';
 import StockPrice from './StockPrice';
 import { updateWatchList } from '../actions/userActions';
 
-const mapDispatchToProps = dispatch => ({
-    updateWatchList: (updatedList) => dispatch(updateWatchList(updatedList))
+const mapDispatchToProps = (dispatch: any) => ({
+    updateWatchList: (updatedList: Array<string>) => dispatch(updateWatchList(updatedList))
 });
 
 /** Renders a list of stocks in a sidebar */
-const SideBar = (props) => {
+const SideBar = (props: any) => {
     if (props.symbols && props.symbols.length > 0) {
         return (
             <div className='side-bar'>
                 <ul className='list-group'>
-                    {props.symbols.map(s => 
+                    {props.symbols.map((s: string) => 
                         <li className='list-group-item d-flex p-0' key={s}>
                             <span className="w-25 pl-3 d-flex align-items-center">{s}</span>
                             <div className='side-bar-chart w-50'>

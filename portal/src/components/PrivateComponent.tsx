@@ -2,13 +2,14 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   const { loggedIn } = state.authReducer;
   return { isLoggedIn: loggedIn };
 };
 
 /** Proctects a component from unathenticated users */
-const PrivateComponent = ({ component: Component, isLoggedIn, ...rest }) => {
+const PrivateComponent = (props: any) => {
+    const { component: Component, isLoggedIn, ...rest } = props;
     return isLoggedIn ?  <Component props={rest} /> : null;
 }
 

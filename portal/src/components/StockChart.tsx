@@ -5,7 +5,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 import { loadDailyDataAction } from '../actions/stockActions';
 
-const utcToLocalTimestamp = (timestamp) => {
+const utcToLocalTimestamp = (timestamp: number) => {
     const offset = new Date().getTimezoneOffset()
     const localTimestamp = timestamp - (offset * 60);
 
@@ -13,18 +13,31 @@ const utcToLocalTimestamp = (timestamp) => {
     return localTimestamp * 1000;
 };  
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     const { dailyData } = state.stockReducer;
     return { dailyData };
 };
 
-const mapDispatchToProps = dispatch => ({
-    loadDailyDataAction: (symbol, date) => dispatch(loadDailyDataAction(symbol, date))
+const mapDispatchToProps = (dispatch: any) => ({
+    loadDailyDataAction: (symbol: string, date: string) => dispatch(loadDailyDataAction(symbol, date))
 })
 
-class Chart extends Component {
+interface State {
+    options: any
+}
+
+interface Props {
+    allowSelectRange?: boolean,
+    disableXAxis?: boolean,
+    disableMouseTracking?: boolean,
+    height?: number,
+    title?: string,
+    loadDailyDataAction: (symbol: string, date: string) => any
+}
+
+class Chart extends Component<Props, State> {
     
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
         const options = {
             chart:{
@@ -54,10 +67,8 @@ class Chart extends Component {
                     from: Date.UTC(2011, 9, 7, 16),
                     to: Date.UTC(2011, 9, 10, 8),
                     repeat: 7 * 24 * 36e5
-                }]
-            },
-            xAxis: {
-                visible: !this.props.disableXAxis,
+                }],
+                visible: !this.props.disableXAxis
             },
             yAxis: {
                 visible: false,
@@ -88,10 +99,10 @@ class Chart extends Component {
     }
 
     componentDidMount() {
-        this.props.loadDailyDataAction(2450, '2020-02-13')
-            .then(data => {
+        this.props.loadDailyDataAction('2450', '2020-02-13')
+            .then((data: any) => {
                 const priceData = data['price_data'];
-                const chartData = []
+                const chartData: Array<Array<number>> = []
                 Object.keys(priceData).forEach(key => {
                     chartData.push([utcToLocalTimestamp(parseFloat(key)), parseFloat(priceData[key])]);
                 });

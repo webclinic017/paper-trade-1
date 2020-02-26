@@ -1,8 +1,12 @@
 import { getAccessToken } from '../services';
 
-export const AuthActions = {
-    LOGIN_SUCCESS: 'LOGIN_SUCCESS'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+interface LoginSuccessAction {
+    type: typeof LOGIN_SUCCESS
 }
+
+export type AuthActionTypes = LoginSuccessAction
 
 export const login = (username: string, password: string) => (dispatch: any) => {
     return getAccessToken(username, password).then(data => {
@@ -10,7 +14,8 @@ export const login = (username: string, password: string) => (dispatch: any) => 
         sessionStorage.setItem('accessToken', data['access']);
         sessionStorage.setItem('refreshToken', data['refresh']);
         dispatch({
-            type: AuthActions.LOGIN_SUCCESS
+            type: LOGIN_SUCCESS
         });
+        return data['access'];
     });
 };
