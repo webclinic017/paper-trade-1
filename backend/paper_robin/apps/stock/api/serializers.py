@@ -13,22 +13,16 @@ class StockSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "symbol"]
 
 
-class DailyStockDataSerializer(serializers.ModelSerializer):
+class DailyStockDataSerializer(serializers.HyperlinkedModelSerializer):
+    symbol = serializers.CharField(read_only=True, source="symbol.symbol")
+
     class Meta:
         model = DailyStockData
         fields = [
             "id",
             "symbol",
             "date",
-            "current_price",
-            "price_open",
-            "day_high",
-            "day_low",
-            "high_52_weeks",
-            "low_52_weeks",
             "time_zone",
-            "volume",
-            "volume_avg",
             "price_data",
         ]
 

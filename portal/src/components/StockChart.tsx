@@ -41,7 +41,7 @@ class Chart extends Component<Props, State> {
         super(props);
         const options = {
             chart:{
-                backgroundColor: '#1b1b1d',
+                backgroundColor: 'transparent',
                 height: props.height,
             },
             credits: {
@@ -99,12 +99,12 @@ class Chart extends Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.loadDailyDataAction('2450', '2020-02-13')
+        this.props.loadDailyDataAction('2944', '2020-02-13')
             .then((data: any) => {
                 const priceData = data['price_data'];
                 const chartData: Array<Array<number>> = []
                 Object.keys(priceData).forEach(key => {
-                    chartData.push([utcToLocalTimestamp(parseFloat(key)), parseFloat(priceData[key])]);
+                    chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
                 });
                 let i = 0;
 

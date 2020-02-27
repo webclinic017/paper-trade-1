@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 
 import Search from './Search'; 
+import { removeAccessTokens } from '../services';
 
 const NavComponent = () => (
     <Navbar>
@@ -21,9 +22,9 @@ const NavComponent = () => (
             </div>
             <div className="col-6">
                 <Nav className="float-right">
-                    {/* <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="profile">Profile</Nav.Link>
-                    <Nav.Link href="pricing">Pricing</Nav.Link> */}
+                    {/* <Nav.Link href="/">Home</Nav.Link> */}
+                    {/* <Nav.Link href="profile">Profile</Nav.Link> */}
+                    <Nav.Link href="/" onClick={removeAccessTokens}>Logout</Nav.Link>
                 </Nav>
             </div>
         </div>

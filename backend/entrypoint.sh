@@ -19,7 +19,7 @@ python manage.py migrate
 if ! [ -z "$RUN_ENTRYPOINT" ]
 then
   python manage.py createsuperuser --noinput
-  python manage.py upload_sample_data
+  python manage.py upload_initial_data
 fi
 
 exec "$@"

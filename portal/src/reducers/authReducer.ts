@@ -1,12 +1,9 @@
-import { validateToken } from '../services';
+import { validateToken, removeAccessTokens } from '../services';
 import { LOGIN_SUCCESS, AuthActionTypes } from '../actions/authActions';
 
 /** Removes stale tokens from session storage */
 validateToken().then(res => res).catch(
-    error => {
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('refreshToken');
-    }
+    error => removeAccessTokens()  
 );
 
 const initialState = {

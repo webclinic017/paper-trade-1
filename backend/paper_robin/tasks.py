@@ -8,3 +8,12 @@ from paper_robin.apps.stock.models import Stock
 @app.task
 def hello():
     print("hello")
+
+
+@app.task
+def get_intra_day_data(symbols=[], date):
+    pass
+
+
+
+

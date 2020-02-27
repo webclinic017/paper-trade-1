@@ -17,7 +17,7 @@ const HomePage = (props: any) => (
             </div>
         </div>
         <div className='col-4'>
-            <SideBar symbols={['AMD', 'GOOGL']}/> 
+            <SideBar /> 
         </div>
     </div>
 );

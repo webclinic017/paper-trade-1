@@ -4,11 +4,14 @@
     overflow: scroll;
 }
 
+.side-bar .list-group {
+    border: 1px solid #0e0d0d;
+}
+
 .side-bar .list-group-item {
     background: #1b1b1d;
     border: 0;
     color: #fff;
-    border-bottom: 1px solid gray !important;
 }
 
 .side-bar .list-group-item:hover {
