@@ -27,10 +27,13 @@ class StockViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Stock.objects.all()
 
     def get_permissions(self):
-        if self.action == 'autocomplete':
-            return [permissions.AllowAny(), ]        
+        if self.action == "autocomplete":
+            return [
+                permissions.AllowAny(),
+            ]
         return super(StockViewSet, self).get_permissions()
 
+    # deprecate this
     @action(detail=False, methods=["get"], url_path="autocomplete/(?P<q>\w+)")
     def autocomplete(self, request, q=""):
         stocks = Stock.objects.filter(
@@ -59,6 +62,7 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(data, many=True)
 
         return Response(serializer.data)
+
 
 class StockPortfolioViewSet(viewsets.ModelViewSet):
     """

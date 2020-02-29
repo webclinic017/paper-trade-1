@@ -16,14 +16,15 @@ class StockPortfolio(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     principal = models.DecimalField(decimal_places=2, max_digits=15)
     purchasing_power = models.DecimalField(decimal_places=2, max_digits=15, default=0)
-    properties = JSONField()
+    properties = JSONField(default=dict)
+
 
 @receiver(post_save, sender=User)
 def create_stock_portfolio(sender, instance, created, **kwargs):
     if created:
         StockPortfolio.objects.create(user=instance, principal=0, purchasing_power=0)
 
-        
+
 class StockPosition(TimeStampedModel):
     portfolio = models.ForeignKey(StockPortfolio, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)

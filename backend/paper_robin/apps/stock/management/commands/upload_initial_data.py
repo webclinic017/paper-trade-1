@@ -8,7 +8,6 @@ from paper_robin.settings import BASE_DIR
 from paper_robin.data.utils import timestring_to_epoch
 
 
-
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
@@ -24,7 +23,7 @@ class Command(BaseCommand):
                     Stock.objects.create(name=row[1], symbol=row[0])
                 except:
                     break
-        
+
         with open(
             os.path.join(BASE_DIR, "paper_robin/data/snap-intraday-sample.csv")
         ) as csvfile:
@@ -38,10 +37,9 @@ class Command(BaseCommand):
                 time_stamp = timestring_to_epoch(row[0])
                 price_data[time_stamp] = row[1]
 
-        
             DailyStockData.objects.create(
                 symbol=snap_stock,
                 date=date(2020, 2, 13),
                 time_zone="US/Eastern",
-                price_data=price_data
+                price_data=price_data,
             )

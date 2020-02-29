@@ -6,8 +6,12 @@ export const loadDailyStockData = (symbol: string, date: string) =>
     });
 
 
-export const autocomplete = (q : string, cancelToken : any) => {
-    return axios.get(`/stocks/autocomplete/${q}`, {
+export const autocomplete = (q : string, cancelToken : any) =>
+    axios.get(`/stocks/autocomplete/${q}`, {
         cancelToken: cancelToken 
     });
-}
+
+export const updateWatchList = (watchList: Array<Number>, id: Number) =>
+    axios.patch(`/stock_porfolios/${id}/`, {
+        properties: watchList
+    });

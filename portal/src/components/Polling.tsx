@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state: any) => {
-    const { watchList } = state.userReducer;
+    const { watchList } = state.stockPortfolioReducer;
     return { watchList };
 }
 

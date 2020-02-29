@@ -13,7 +13,7 @@ class StockSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "symbol"]
 
 
-class DailyStockDataSerializer(serializers.HyperlinkedModelSerializer):
+class DailyStockDataSerializer(serializers.ModelSerializer):
     symbol = serializers.CharField(read_only=True, source="symbol.symbol")
 
     class Meta:
@@ -30,7 +30,7 @@ class DailyStockDataSerializer(serializers.HyperlinkedModelSerializer):
 class StockPortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockPortfolio
-        fields = ["id", "user", "principal", "purchasing_power"]
+        fields = ["id", "user", "principal", "purchasing_power", "properties"]
 
 
 class StockPositionSerializer(serializers.ModelSerializer):

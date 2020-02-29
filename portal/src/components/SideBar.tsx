@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 
 import StockChart from './StockChart';
 import StockPrice from './StockPrice';
-import { updateWatchList } from '../actions/userActions';
+import { updateWatchListAction } from '../actions/stockPortfolioActions';
 
 
 const mapStateToProps = (state: any) => {
-    const { watchList } = state.userReducer;
+    const { watchList } = state.stockPortfolioReducer;
     return { watchList };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateWatchList: (updatedList: Array<string>) => dispatch(updateWatchList(updatedList))
+    updateWatchList: (updatedList: Array<string>) => dispatch(updateWatchListAction(updatedList))
 });
 
 /** Renders a list of stocks in a sidebar */

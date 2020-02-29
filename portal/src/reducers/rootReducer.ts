@@ -3,10 +3,10 @@ import { combineReducers } from 'redux';
 
 import authReducer from './authReducer';
 import stockReducer from './stockReducer';
-import userReducer from './userReducer';
+import stockPortfolioReducer from './stockPorfolioReducer';
 
 export default combineReducers({
     authReducer,
     stockReducer,
-    userReducer
+    stockPortfolioReducer
 });
