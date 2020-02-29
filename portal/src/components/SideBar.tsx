@@ -9,7 +9,7 @@ import StockPrice from './StockPrice';
 const mapStateToProps = (state: AppState) => {
     const { stockPortfolios, viewing } = state.stockPortfolioReducer;
     if (stockPortfolios.length > 0) {
-        return { watchList: stockPortfolios[viewing].properties.watchList };
+        return { watchList: stockPortfolios[viewing].properties.watch_list };
     } else {
         return { watchList: [] }
     }

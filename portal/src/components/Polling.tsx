@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../reducers/rootReducer';
 
 const mapStateToProps = (state: AppState) => {
     const { stockPortfolios } = state.stockPortfolioReducer;
-    const watchList: Array<number> = []
-
+    let watchList: Array<number> = []
     stockPortfolios.forEach(sp => {
-        watchList.concat(sp.properties.watchList);
+        watchList = watchList.concat(sp.properties.watch_list);
     })
     
     return { watchList };
 }
 
-interface Props {};
+interface Props { watchList: Array<number> };
 interface State { timerID?: any };
 
 /** Top level component for polling */
@@ -25,8 +24,8 @@ class Polling extends Component<Props, State> {
 
     componentDidMount() {
         const timerID = setInterval(() => {
-            //console.log(this.props.watchList, 'watch list');
-        }, 1000); 
+            console.log(this.props.watchList, 'watch list');
+        }, 60000); 
         
         this.setState({ timerID });
     }

@@ -1,4 +1,4 @@
-import { UPDATE_WATCHLIST, GET_STOCK_PORTFOLIOS, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
+import { UPDATE_WATCHLIST, LOAD_STOCK_PORTFOLIOS, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
 import { StockPortfolio } from '../models/stockPortfolio';
 
 export interface stockPortfolioState {
@@ -13,7 +13,7 @@ const initialState: stockPortfolioState = {
 
 export default (state = initialState, action: StockPortfolioActionTypes) => {
     switch (action.type) {
-        case GET_STOCK_PORTFOLIOS:
+        case LOAD_STOCK_PORTFOLIOS:
             return {
                 ...state,
                 stockPortfolios: [...state.stockPortfolios, ...action.payload]

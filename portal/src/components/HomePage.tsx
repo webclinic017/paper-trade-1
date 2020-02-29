@@ -8,8 +8,9 @@ import { User } from '../models/user';
 import { Stock } from '../models/stock';
 import { StockPortfolio, DefaultStockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
-import { getStockPortfoliosAction } from '../actions/stockPortfolioActions';
+import { loadStockPortfoliosAction } from '../actions/stockPortfolioActions';
 import { loadStocksAction } from '../actions/stockActions';
+import { loadDailyDataAction } from '../actions/stockActions';
 import { getCurrentUserAction } from '../actions/userActions'; 
 import { moneyFormatter } from '../utils'
 import StockChart from './StockChart';
@@ -27,8 +28,9 @@ const mapStateToProps = (state: AppState) => {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-    loadStockPortfolios: (userId: number) => dispatch(getStockPortfoliosAction(userId)),
+    loadStockPortfolios: (userId: number) => dispatch(loadStockPortfoliosAction(userId)),
     loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
+    loadDailyDataAction: (symbol: string, date: string) => dispatch(loadDailyDataAction(symbol, date)),
     getCurrentUser: () => dispatch(getCurrentUserAction())
 })
 
@@ -78,7 +80,7 @@ class HomePage extends Component<Props, State> {
 
         if (this.state.loading) {
             return (
-                <div className="text-center mt-5 homepage-loader">
+                <div className="homepage-loader">
                     <Loader
                         type="TailSpin"
                         color="#228B22"
@@ -91,13 +93,11 @@ class HomePage extends Component<Props, State> {
             return (
                 <div className='row mt-5'>
                     <div className='offset-2 col-6'>
-                        <div>
-                            <h1 className="text-white"> 
-                                {moneyFormatter(26000)}
-                            </h1>
-                            <hr className="bg-secondary"/>
-                            <StockChart allowSelectRange={true} />
-                        </div>
+                        <h1 className="text-white"> 
+                            {moneyFormatter(26000)}
+                        </h1>
+                        <hr className="bg-secondary"/>
+                        <StockChart allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
                         <SideBar /> 

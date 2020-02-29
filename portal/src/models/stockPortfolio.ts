@@ -12,7 +12,7 @@ export interface StockPortfolio {
     principal: String,
     purchasing_power: String,
     properties: {
-        watchList: Array<number>
+        watch_list: Array<number>
     }
     stockposition_set: Array<StockPosition>
 }
@@ -23,7 +23,7 @@ export const DefaultStockPortfolio = {
     principal: '',
     purchasing_power: '',
     properties: {
-        watchList: []
+        watch_list: []
     },
     stockposition_set: []
 }

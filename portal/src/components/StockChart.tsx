@@ -94,25 +94,25 @@ class Chart extends Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.loadDailyDataAction('2944', '2020-02-13')
-            .then((data: any) => {
-                const priceData = data['price_data'];
-                const chartData: Array<Array<number>> = []
-                Object.keys(priceData).forEach(key => {
-                    chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
-                });
-                let i = 0;
+        // this.props.loadDailyDataAction('2944', '2020-02-13')
+        //     .then((data: any) => {
+        //         const priceData = data['price_data'];
+        //         const chartData: Array<Array<number>> = []
+        //         Object.keys(priceData).forEach(key => {
+        //             chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
+        //         });
+        //         let i = 0;
 
-                setInterval(() => {
-                    const series = this.state.options.series;
-                    series[0].data = chartData.slice(0, i);
-                    series[0]['color'] = '#f45531';
-                    this.setState({options: {...this.state.options, series: series}});
-                    i+=1;
-                }, 1000);
+        //         setInterval(() => {
+        //             const series = this.state.options.series;
+        //             series[0].data = chartData.slice(0, i);
+        //             series[0]['color'] = '#f45531';
+        //             this.setState({options: {...this.state.options, series: series}});
+        //             i+=1;
+        //         }, 1000);
                
-                // this.setState({options: {...this.state.options, series: series}});
-            });
+        //         // this.setState({options: {...this.state.options, series: series}});
+        //     });
     }
 
     render() {
