@@ -1,12 +1,17 @@
-import { validateToken, removeAccessTokens } from '../services';
+import { removeAccessTokens } from '../services/authService';
+import { getCurrentUser } from '../services/userService';
 import { LOGIN_SUCCESS, AuthActionTypes } from '../actions/authActions';
 
 /** Removes stale tokens from session storage */
-validateToken().then(res => res).catch(
+getCurrentUser().then(res => res).catch(
     error => removeAccessTokens()  
 );
 
-const initialState = {
+export interface authState {
+    'loggedIn': boolean,
+}
+
+const initialState: authState = {
     'loggedIn': sessionStorage.getItem('accessToken') !== null
 }
 

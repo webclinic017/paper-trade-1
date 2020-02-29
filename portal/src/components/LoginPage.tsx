@@ -5,14 +5,13 @@ import { connect } from 'react-redux';
 import { axios } from '../services';
 import { login } from '../actions/authActions';
 
-
 const mapDispatchToProps = (dispatch: any) => ({
-    login: (username: string, password: string) => dispatch(login(username, password))
+    login: (username: string, password: string) => dispatch(login(username, password)),
 })
 
 interface Props { 
     history: any,
-    login: (username: string, password: string) => Promise<any>
+    login: (username: string, password: string) => Promise<string>
 }
 
 interface State {

@@ -1,6 +1,10 @@
 import { UPDATE_WATCHLIST, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
 
-const initialState = {
+export interface stockPortfolioState {
+    'watchList': Array<Number>
+}
+
+const initialState: stockPortfolioState = {
     'watchList': []
 }
 

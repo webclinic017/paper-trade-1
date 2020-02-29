@@ -1,9 +1,11 @@
 import { LOAD_DAILY_DATA, StockActionTypes } from '../actions/stockActions';
 
-const initialState = {
+export interface StockState {
+    'dailyData': Object,
+}
+
+const initialState: StockState = {
     'dailyData': {},
-    'currentPrices': {},
-    'watchList': []
 }
 
 export default (state = initialState, action: StockActionTypes) => {
@@ -11,11 +13,7 @@ export default (state = initialState, action: StockActionTypes) => {
         case LOAD_DAILY_DATA:
             return {
                 ...state,
-                'dailyData': { ...state.dailyData, ...action.payload.dailyData },
-                'currentPrices': { 
-                    ...state.currentPrices,
-                    ...action.payload.currentPrice
-                }
+                'dailyData': { ...state.dailyData, ...action.payload.dailyData }
             }
         default: return state
     }

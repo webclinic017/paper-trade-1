@@ -13,10 +13,3 @@ export const getAccessToken = (username: string, password: string) : Promise<any
         }).then(res => res.data)
         .catch(error => Promise.reject(error))
 );
-
-/** Checks that an access token is still valid by making a request */
-export const validateToken = () : Promise<any> => { 
-    return axios.get('/users/me/')
-        .then(res => res.data)
-        .catch(error => Promise.reject(error))
-}
