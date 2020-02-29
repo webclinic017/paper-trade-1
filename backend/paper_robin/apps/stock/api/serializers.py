@@ -10,12 +10,14 @@ from paper_robin.apps.stock.models import (
 class StockExchangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockExchange
-        fields = ["name_abbr", "name"]
+        fields = ["id", "name_abbr", "name"]
 
 class StockSerializer(serializers.ModelSerializer):
+    exchanges = StockExchangeSerializer(many=True)
+
     class Meta:
         model = Stock
-        fields = ["id", "name", "symbol"]
+        fields = ["id", "name", "symbol", "exchanges"]
 
 
 class DailyStockDataSerializer(serializers.ModelSerializer):
