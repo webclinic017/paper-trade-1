@@ -18,4 +18,4 @@ export {
     PrivateRoute,
     SideBar,
     StockPrice
- };
+ }

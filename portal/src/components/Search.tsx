@@ -20,7 +20,7 @@ class Search extends Component {
                 this.state.cancelSource.cancel();
             } catch(error) {
                 // do nothing
-            };
+            }
 
             const cancelToken = (axios as any).CancelToken;
             const source = cancelToken.source();
@@ -39,8 +39,8 @@ class Search extends Component {
             });
         } else {
             this.setState({ searchString: '', suggestions: [], showSuggestions: false });
-        };
-    }
+        }
+    };
 
     select = () => {
         this.setState({
@@ -48,7 +48,7 @@ class Search extends Component {
             suggestions: [],
             cancelSource: null
         });
-    }
+    };
 
     highlight = (searchString: string, value: string) => {
         if (value.toLowerCase().startsWith(searchString.toLowerCase())) {
@@ -69,7 +69,7 @@ class Search extends Component {
     
     hideSuggestions = () => {
         this.setState({showSuggestions: false});
-    }
+    };
 
     render() {      
         let suggestions;

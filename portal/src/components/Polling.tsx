@@ -5,7 +5,7 @@ import { AppState } from '../reducers/rootReducer';
 const mapStateToProps = (state: AppState) => {
     const { watchList } = state.stockPortfolioReducer;
     return { watchList };
-}
+};
 
 interface Props { watchList: Array<number> };
 interface State { timerID?: any };
@@ -30,7 +30,8 @@ class Polling extends Component<Props, State> {
     }
 
     render() { 
-        return null; }
+        return null; 
+    }
 }
 
 export default connect(mapStateToProps, {})(Polling); 

@@ -7,7 +7,7 @@ import { login } from '../actions/authActions';
 
 const mapDispatchToProps = (dispatch: any) => ({
     login: (username: string, password: string) => dispatch(login(username, password)),
-})
+});
 
 interface Props { 
     history: any,
@@ -21,7 +21,7 @@ interface State {
 }
 
 class LoginPage extends Component<Props, State> {
-    constructor(props: any) {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -29,7 +29,6 @@ class LoginPage extends Component<Props, State> {
             password: '',
             submitted: false
         };
-
     }
 
     handleChange = (ev: any) => {
@@ -49,7 +48,7 @@ class LoginPage extends Component<Props, State> {
                 .then(res => {
                     const token = sessionStorage.getItem('accessToken');
                     axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-                    this.props.history.push('/')
+                    this.props.history.push('/');
                 });
         }
     }

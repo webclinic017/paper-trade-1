@@ -22,25 +22,30 @@ const mapStateToProps = (state: AppState) => {
     if (stockPortfolios.length > 0) {
         return { stockPortfolio: stockPortfolios[viewing], watchList };
     } else {
-        return { stockPortfolio: DefaultStockPortfolio, watchList }
+        return { stockPortfolio: DefaultStockPortfolio, watchList };
     }
-}
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
     loadStockPortfolios: (userId: number) => dispatch(loadStockPortfoliosAction(userId)),
     loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
     loadDailyData: (symbolIds: Array<number>, date: string) => dispatch(loadDailyDataAction(symbolIds, date)),
     loadCurrentUser: () => dispatch(loadCurrentUserAction())
-})
+});
 
-interface Props {
+interface StateProps {
     stockPortfolio: IStockPortfolio,
-    watchList: Array<number>,
+    watchList: Array<number>
+}
+
+interface DispatchProps {
     loadStockPortfolios: (userId: number) => Promise<Array<IStockPortfolio>>,
     loadStocks: (symbolIds: Array<number>) => Promise<Array<IStock>>,
     loadCurrentUser: () => Promise<IUser>,
     loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<IDailyStockData>>
 }
+
+type Props = StateProps & DispatchProps;
 
 interface State {
     loading: boolean
@@ -57,6 +62,7 @@ class HomePage extends Component<Props, State> {
 
     componentDidMount() {
         this.setState({ loading: true });
+        
         this.props.loadCurrentUser().then(
             user => {
                 const userId = user.id;
@@ -77,7 +83,7 @@ class HomePage extends Component<Props, State> {
                         });
                     } else {
                         this.setState({ loading: false });
-                    };
+                    }
                 });
             }
         );
@@ -113,6 +119,6 @@ class HomePage extends Component<Props, State> {
             );
         }
     }
-};
+}
   
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

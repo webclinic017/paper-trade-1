@@ -138,8 +138,8 @@ class Chart extends Component<Props, State> {
                     {rangeSelector}
                 </>
             );
-        };
-    };
+        }
+    }
 };
 
 export default connect(mapStateToProps)(Chart);

@@ -11,6 +11,6 @@ const mapStateToProps = (state: any) => {
 const PrivateComponent = (props: any) => {
     const { component: Component, isLoggedIn, ...rest } = props;
     return isLoggedIn ?  <Component props={rest} /> : null;
-}
+};
 
 export default connect(mapStateToProps)(PrivateComponent);
