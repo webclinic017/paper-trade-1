@@ -74,7 +74,13 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
 
         q_objects = Q()
         for param in query_params:
-            q_objects &= Q(**{param: query_params[param]})
+            q_object = Q()
+
+            value = query_params[param].split('|')
+            for v in value:
+                q_object |= Q(**{param: v})
+            
+            q_objects &= q_object
 
         data = DailyStockData.objects.filter(q_objects)
         serializer = self.get_serializer(data, many=True)

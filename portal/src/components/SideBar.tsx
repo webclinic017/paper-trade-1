@@ -1,47 +1,35 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import { AppState } from '../reducers/rootReducer';
-import { updateWatchListAction } from '../actions/stockPortfolioActions';
 import StockChart from './StockChart';
 import StockPrice from './StockPrice';
 
-const mapStateToProps = (state: AppState) => {
-    const { stockPortfolios, viewing } = state.stockPortfolioReducer;
-    if (stockPortfolios.length > 0) {
-        return { watchList: stockPortfolios[viewing].properties.watch_list };
-    } else {
-        return { watchList: [] }
-    }
-};
+interface Props {
+    watchList: Array<number>
+}
 
-const mapDispatchToProps = (dispatch: any) => ({
-    updateWatchList: (updatedList: Array<string>) => dispatch(updateWatchListAction(updatedList))
-});
-
-/** Renders a list of stocks in a sidebar */
-const SideBar = (props: any) => {
+/** Renders a list of stock charts in a sidebar */
+const SideBar = (props: Props) => {
     return (
         <div className='side-bar'>
             <ul className='list-group'>
                 <h5 className="text-white pl-3 mt-3">Watchlist</h5>
-                {props.watchList.map((s: string) => 
-                    <li className='list-group-item d-flex p-0' key={s}>
-                        <span className="w-25 pl-3 d-flex align-items-center">{s}</span>
+                {props.watchList.map(symbolId => 
+                    <li className='list-group-item d-flex p-0' key={symbolId}>
+                        <span className="w-25 pl-3 d-flex align-items-center">{symbolId}</span>
 
                         <div className='side-bar-chart w-50'>
-                            <StockChart disableMouseTracking={true} disableXAxis={true} height={100} />
+                            <StockChart symbolId={symbolId} disableMouseTracking={true} disableXAxis={true} height={100} />
                         </div>
                         
                         <div className="w-25 ml-1 d-flex align-items-center">
-                            <StockPrice symbolId={2944} />
+                            <StockPrice symbolId={symbolId} />
                         </div>
                     </li>
                 )}
             </ul>
-            <button onClick={() => props.updateWatchList(['amd'])}></button>
+            {/* <button onClick={() => props.updateWatchList([1])}></button> */}
         </div>
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default SideBar;

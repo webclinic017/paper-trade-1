@@ -5,43 +5,44 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { User } from '../models/user';
-import { Stock } from '../models/stock';
+import { Stock, DailyStockData } from '../models/stock';
 import { StockPortfolio, DefaultStockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
 import { loadStockPortfoliosAction } from '../actions/stockPortfolioActions';
 import { loadStocksAction } from '../actions/stockActions';
 import { loadDailyDataAction } from '../actions/stockActions';
-import { getCurrentUserAction } from '../actions/userActions'; 
+import { loadCurrentUserAction } from '../actions/userActions'; 
 import { moneyFormatter } from '../utils'
 import StockChart from './StockChart';
 import SideBar from './SideBar';
 
 
-
 const mapStateToProps = (state: AppState) => {
-    const { stockPortfolios, viewing } = state.stockPortfolioReducer;
+    const { stockPortfolios, watchList, viewing } = state.stockPortfolioReducer;
     if (stockPortfolios.length > 0) {
-        return { stockPortfolio: stockPortfolios[viewing] };
+        return { stockPortfolio: stockPortfolios[viewing], watchList };
     } else {
-        return { stockPortfolio: {} }
+        return { stockPortfolio: DefaultStockPortfolio, watchList }
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
     loadStockPortfolios: (userId: number) => dispatch(loadStockPortfoliosAction(userId)),
     loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
-    loadDailyDataAction: (symbolIds: Array<number>, date: string) => dispatch(loadDailyDataAction(symbolIds, date)),
-    getCurrentUser: () => dispatch(getCurrentUserAction())
+    loadDailyData: (symbolIds: Array<number>, date: string) => dispatch(loadDailyDataAction(symbolIds, date)),
+    loadCurrentUser: () => dispatch(loadCurrentUserAction())
 })
 
 interface Props {
+    stockPortfolio: StockPortfolio,
+    watchList: Array<number>,
     loadStockPortfolios: (userId: number) => Promise<Array<StockPortfolio>>,
     loadStocks: (symbolIds: Array<number>) => Promise<Array<Stock>>,
-    getCurrentUser: () => Promise<User>
+    loadCurrentUser: () => Promise<User>,
+    loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<DailyStockData>>
 }
 
 interface State {
-    stockPortfolio: StockPortfolio,
     loading: boolean
 }
 
@@ -50,27 +51,33 @@ class HomePage extends Component<Props, State> {
         super(props);
 
         this.state = { 
-            stockPortfolio: DefaultStockPortfolio,
             loading: false
         };
     }
 
     componentDidMount() {
         this.setState({ loading: true });
-        this.props.getCurrentUser().then(
+        this.props.loadCurrentUser().then(
             user => {
                 const userId = user.id;
                 this.props.loadStockPortfolios(userId).then(portfolios => {
-                    const watchList = new Set<number>();
+                    const watchedSymbols = new Set<number>();
                     portfolios.forEach(p => {
-                        p.stockposition_set.forEach(sp => {
-                            watchList.add(sp.stock);
-                        });
-                    });
+                        p.stockposition_set.forEach(sp => watchedSymbols.add(sp.stock));
+                        p.properties.watch_list.forEach(s => watchedSymbols.add(s));
+                    });                    
 
-                    this.props.loadStocks(Array.from(watchList)).then(res => {
-                        this.setState({ loading: false});
-                    });
+                    const watchList = Array.from(watchedSymbols);
+                    
+                    if (watchList.length > 0) {
+                        this.props.loadStocks(watchList);
+
+                        this.props.loadDailyData(watchList, '2020-02-13').then(res => {
+                            this.setState({ loading: false });
+                        });
+                    } else {
+                        this.setState({ loading: false });
+                    };
                 });
             }
         );
@@ -97,10 +104,10 @@ class HomePage extends Component<Props, State> {
                             {moneyFormatter(26000)}
                         </h1>
                         <hr className="bg-secondary"/>
-                        <StockChart allowSelectRange={true} />
+                        <StockChart symbolId={2944} allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
-                        <SideBar /> 
+                        <SideBar watchList={this.props.watchList}/> 
                     </div>
                 </div>
             );

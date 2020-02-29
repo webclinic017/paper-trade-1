@@ -44,13 +44,13 @@ export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (
 
             // could have a normalize function here
             if (data.length > 0) {
-                const normalizedData = { [data[0].id]: data[0] };
+                const normalizedData = { [data[0].symbol]: data[0] };
                 dispatch({
                     type: LOAD_DAILY_DATA,
                     payload: normalizedData
                 })
             } 
         
-            return Promise.resolve(data[0])
-        }).catch(error => Promise.reject(error));
+            return data
+        });
 }

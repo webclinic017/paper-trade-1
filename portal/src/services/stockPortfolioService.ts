@@ -3,7 +3,7 @@ import { axios } from '.';
 export const loadStockPortfolios = (userId: Number) => 
     axios.get('/stock_portfolios/', {
         params: {
-            user: 2
+            user: userId
         }
     });
 

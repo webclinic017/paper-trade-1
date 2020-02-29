@@ -20,16 +20,17 @@ export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => 
     return loadStockPortfolios(userId).then(res => {
         
         const stockPortfolios: Array<StockPortfolio> = res.data;
-        let watchList: Array<number> = []
-        stockPortfolios.forEach(sp => {
-            watchList = watchList.concat(sp.properties.watch_list);
-        })
+        const watchList = new Set<number>();
+        stockPortfolios.forEach(p => {
+            p.stockposition_set.forEach(sp => watchList.add(sp.stock));
+            p.properties.watch_list.forEach(s => watchList.add(s));
+        });
     
         dispatch({
             type: LOAD_STOCK_PORTFOLIOS,
             payload: {
                 stockPortfolios: res.data,
-                watchList
+                watchList: Array.from(watchList)
             }
         });
         

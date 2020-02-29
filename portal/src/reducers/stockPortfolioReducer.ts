@@ -18,8 +18,8 @@ export default (state = initialState, action: StockPortfolioActionTypes) => {
         case LOAD_STOCK_PORTFOLIOS:
             return {
                 ...state,
-                stockPortfolios: [...state.stockPortfolios, ...action.payload.stockPortfolios],
-                watchList: [...state.watchList, ...action.payload.watchList]
+                stockPortfolios: action.payload.stockPortfolios,
+                watchList: action.payload.watchList
             }
         default: return state
     }

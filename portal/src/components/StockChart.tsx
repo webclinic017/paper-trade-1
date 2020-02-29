@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import Loader from 'react-loader-spinner';
-
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-const mapStateToProps = (state: any) => {
+import { AppState } from '../reducers/rootReducer';
+import { DailyStockData } from '../models/stock';
+
+const mapStateToProps = (state: AppState) => {
     const { dailyData } = state.stockReducer;
     return { dailyData };
 };
@@ -15,7 +18,12 @@ interface State {
     options: any
 }
 
-interface Props {
+interface StateProps {
+    dailyData: { [key: number]: DailyStockData },
+}
+
+interface OwnProps {
+    symbolId: number,
     allowSelectRange?: boolean,
     disableXAxis?: boolean,
     disableMouseTracking?: boolean,
@@ -23,6 +31,8 @@ interface Props {
     title?: string,
     loading?: boolean,
 }
+
+type Props = StateProps & OwnProps;
 
 class Chart extends Component<Props, State> {
     
@@ -110,6 +120,16 @@ class Chart extends Component<Props, State> {
     }
 
     render() {
+        const priceData: { [key: string]: string } = _.get(this.props.dailyData, this.props.symbolId, { price_data: {}}).price_data;
+        const chartData: Array<Array<number>> = [];
+        Object.keys(priceData).forEach(key => {
+            chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
+        });
+        const series = this.state.options.series;
+        series.data = chartData;
+        series[0]['color'] = '#f45531';
+        const options = {...this.state.options, series: series};
+        console.log(options);
 
         if (this.props.loading) {
             return (
@@ -140,7 +160,7 @@ class Chart extends Component<Props, State> {
                     <HighchartsReact
                         highcharts={Highcharts}
                         constructorType={'stockChart'}
-                        options={this.state.options}
+                        options={options}
                     />
                     {rangeSelector}
                 </>
@@ -149,4 +169,4 @@ class Chart extends Component<Props, State> {
     };
 };
 
-export default connect(null, null)(Chart);
+export default connect(mapStateToProps)(Chart);
