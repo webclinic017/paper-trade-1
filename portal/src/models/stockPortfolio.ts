@@ -16,3 +16,14 @@ export interface StockPortfolio {
     }
     stockposition_set: Array<StockPosition>
 }
+
+export const DefaultStockPortfolio = {
+    id: -1,
+    user: -1,
+    principal: '',
+    purchasing_power: '',
+    properties: {
+        watchList: []
+    },
+    stockposition_set: []
+}

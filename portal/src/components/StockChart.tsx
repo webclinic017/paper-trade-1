@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
+import Loader from 'react-loader-spinner';
 
 import { loadDailyDataAction } from '../actions/stockActions';
-
-const utcToLocalTimestamp = (timestamp: number) => {
-    const offset = new Date().getTimezoneOffset()
-    const localTimestamp = timestamp - (offset * 60);
-
-    // format that high chart uses
-    return localTimestamp * 1000;
-};  
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const mapStateToProps = (state: any) => {
     const { dailyData } = state.stockReducer;
@@ -32,6 +26,7 @@ interface Props {
     disableMouseTracking?: boolean,
     height?: number,
     title?: string,
+    loading?: boolean,
     loadDailyDataAction: (symbol: string, date: string) => any
 }
 
@@ -121,27 +116,43 @@ class Chart extends Component<Props, State> {
     }
 
     render() {
-        const rangeSelector = this.props.allowSelectRange ? (
-            <div className="row range-selector w-75 mx-3">
-                <button className="range-select-1d">1 Day</button>
-                <button className="range-select-1w">1 Week</button>
-                <button className="range-select-3m">3 Month</button>
-                <button className="range-select-1y">1 Year</button>
-                <button className="range-select-all">All</button>
-                <hr className=""/>
-            </div>
-        ) : null
-        return (
-            <>
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    constructorType={'stockChart'}
-                    options={this.state.options}
-                />
-                {rangeSelector}
-            </>
-        );
-    }
-}
+
+        if (this.props.loading) {
+            return (
+                <div className="text-center mt-5">
+                    <Loader
+                        type="TailSpin"
+                        color="#228B22"
+                        height={100}
+                        width={100}
+                        timeout={3000} //3 secs
+                    />
+                </div>
+            );
+        } else {
+            const rangeSelector = this.props.allowSelectRange ? (
+                <div className="row range-selector w-75 mx-3">
+                    <button className="range-select-1d">1 Day</button>
+                    <button className="range-select-1w">1 Week</button>
+                    <button className="range-select-3m">3 Month</button>
+                    <button className="range-select-1y">1 Year</button>
+                    <button className="range-select-all">All</button>
+                    <hr className=""/>
+                </div>
+            ) : null;
+
+            return (
+                <>
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        constructorType={'stockChart'}
+                        options={this.state.options}
+                    />
+                    {rangeSelector}
+                </>
+            );
+        };
+    };
+};
 
 export default connect(null, mapDispatchToProps)(Chart);

@@ -13,3 +13,11 @@ export interface DailyStockData {
         string: string,
     }
 }
+
+export const DefaultDailyStockData = {
+    id: -1,
+    symbol: '',
+    date: '',
+    timezone: '',
+    price_data:  {}
+}
