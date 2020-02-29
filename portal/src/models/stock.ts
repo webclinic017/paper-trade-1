@@ -1,17 +1,18 @@
-export interface Stock { 
+export interface IStock { 
     id: number,
     name: string,
     symbol: string
 }
 
-export interface DailyStockData {
+export interface IDailyStockData {
     id: number,
     symbol: number,
     date: string,
     timezone: string,
     price_data:  {
-        string: string,
-    }
+        [key: string]: string,
+    },
+    normalizedData: Array<Array<number>>
 }
 
 export const DefaultDailyStockData = {
@@ -19,5 +20,6 @@ export const DefaultDailyStockData = {
     symbol: '',
     date: '',
     timezone: '',
-    price_data:  {}
+    price_data:  {},
+    normalizedData: []
 }

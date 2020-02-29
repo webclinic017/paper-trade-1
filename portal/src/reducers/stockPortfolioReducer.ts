@@ -1,9 +1,9 @@
 import { UPDATE_WATCHLIST, LOAD_STOCK_PORTFOLIOS, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
-import { StockPortfolio } from '../models/stockPortfolio';
+import { IStockPortfolio } from '../models/stockPortfolio';
 
 export interface stockPortfolioState {
     viewing: number, // which portfolio the user is viewing
-    stockPortfolios: Array<StockPortfolio>,
+    stockPortfolios: Array<IStockPortfolio>,
     watchList: Array<number>
 }
 

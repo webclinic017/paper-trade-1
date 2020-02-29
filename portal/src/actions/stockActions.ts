@@ -1,4 +1,4 @@
-import { Stock } from '../models/stock'; 
+import { IStock, IDailyStockData } from '../models/stock'; 
 import { loadDailyStockData, loadStocks } from '../services/stockService';
 
 export const LOAD_STOCKS = 'LOAD_STOCKS';
@@ -11,16 +11,16 @@ export interface LoadDailyDataAction {
 
 export interface LoadStocksAction {
     type: typeof LOAD_STOCKS,
-    payload: Array<Stock>
+    payload: Array<IStock>
 }
 
 export type StockActionTypes = LoadDailyDataAction | LoadStocksAction;
 
 export const loadStocksAction = (symbolIds: Array<number>) => (dispatch: any) => {
     return loadStocks(symbolIds).then(res => {
-        const stocks: Array<Stock> = res.data;
+        const stocks: Array<IStock> = res.data;
         const normalizedData: {
-            [key: number]: Stock,
+            [key: number]: IStock,
         } = {};
         
         stocks.forEach(s => {
@@ -40,17 +40,29 @@ export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (
 
     return loadDailyStockData(symbolIds, date)
         .then(res => {
-            const data = res.data
+            const data: Array<IDailyStockData> = res.data
+            const normalizedData: { [key: number]: IDailyStockData }= {};
 
-            // could have a normalize function here
-            if (data.length > 0) {
-                const normalizedData = { [data[0].symbol]: data[0] };
-                dispatch({
-                    type: LOAD_DAILY_DATA,
-                    payload: normalizedData
-                })
-            } 
-        
-            return data
+            data.forEach(dsd => {
+                const priceData: {
+                    [key: string]: string,
+                } = dsd.price_data;
+
+                const chartData: Array<Array<number>> = [];
+
+                Object.keys(priceData).forEach(key => {
+                    chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
+                });
+
+                dsd.normalizedData = chartData;
+                normalizedData[dsd.symbol] = dsd;
+            });
+
+            dispatch({
+                type: LOAD_DAILY_DATA,
+                payload: normalizedData
+            });
+                    
+            return normalizedData
         });
 }

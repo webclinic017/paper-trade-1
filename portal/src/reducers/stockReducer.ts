@@ -1,12 +1,12 @@
-import { Stock, DailyStockData } from '../models/stock';
+import { IStock, IDailyStockData } from '../models/stock';
 import { LOAD_STOCKS, LOAD_DAILY_DATA, StockActionTypes } from '../actions/stockActions';
 
 export interface StockState {
     dailyData: {
-        [key: number]: DailyStockData
+        [key: number]: IDailyStockData
     } ,
     stocks: {
-        [key: number]: Stock,
+        [key: number]: IStock,
     }
 }
 

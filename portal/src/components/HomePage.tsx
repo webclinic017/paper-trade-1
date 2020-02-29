@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-import { User } from '../models/user';
-import { Stock, DailyStockData } from '../models/stock';
-import { StockPortfolio, DefaultStockPortfolio } from '../models/stockPortfolio';
+import { IUser } from '../models/user';
+import { IStock, IDailyStockData } from '../models/stock';
+import { IStockPortfolio, DefaultStockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
 import { loadStockPortfoliosAction } from '../actions/stockPortfolioActions';
 import { loadStocksAction } from '../actions/stockActions';
@@ -34,12 +34,12 @@ const mapDispatchToProps = (dispatch: any) => ({
 })
 
 interface Props {
-    stockPortfolio: StockPortfolio,
+    stockPortfolio: IStockPortfolio,
     watchList: Array<number>,
-    loadStockPortfolios: (userId: number) => Promise<Array<StockPortfolio>>,
-    loadStocks: (symbolIds: Array<number>) => Promise<Array<Stock>>,
-    loadCurrentUser: () => Promise<User>,
-    loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<DailyStockData>>
+    loadStockPortfolios: (userId: number) => Promise<Array<IStockPortfolio>>,
+    loadStocks: (symbolIds: Array<number>) => Promise<Array<IStock>>,
+    loadCurrentUser: () => Promise<IUser>,
+    loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<IDailyStockData>>
 }
 
 interface State {

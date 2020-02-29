@@ -1,11 +1,11 @@
 import { loadCurrentUser } from '../services/userService';
-import { User } from '../models/user';
+import { IUser } from '../models/user';
 
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 
 interface loadCurrentUserAction {
     type: typeof GET_CURRENT_USER,
-    payload: User
+    payload: IUser
 }
 
 export type UserActionTypes = loadCurrentUserAction

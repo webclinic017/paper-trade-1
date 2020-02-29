@@ -1,4 +1,4 @@
-import { StockPortfolio } from '../models/stockPortfolio';
+import { IStockPortfolio } from '../models/stockPortfolio';
 import { updateWatchList, loadStockPortfolios } from '../services/stockPortfolioService'; 
 
 export const UPDATE_WATCHLIST = 'UPDATE_WATCHLIST';
@@ -19,7 +19,7 @@ export type StockPortfolioActionTypes = UpdateWatchListAction | LoadStockPortfol
 export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => {
     return loadStockPortfolios(userId).then(res => {
         
-        const stockPortfolios: Array<StockPortfolio> = res.data;
+        const stockPortfolios: Array<IStockPortfolio> = res.data;
         const watchList = new Set<number>();
         stockPortfolios.forEach(p => {
             p.stockposition_set.forEach(sp => watchList.add(sp.stock));

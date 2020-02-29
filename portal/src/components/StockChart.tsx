@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { AppState } from '../reducers/rootReducer';
-import { DailyStockData } from '../models/stock';
+import { IDailyStockData } from '../models/stock';
 
 const mapStateToProps = (state: AppState) => {
     const { dailyData } = state.stockReducer;
@@ -19,7 +19,7 @@ interface State {
 }
 
 interface StateProps {
-    dailyData: { [key: number]: DailyStockData },
+    dailyData: { [key: number]: IDailyStockData },
 }
 
 interface OwnProps {
@@ -97,34 +97,8 @@ class Chart extends Component<Props, State> {
           this.state = { options: options }
     }
 
-    componentDidMount() {
-        // this.props.loadDailyDataAction('2944', '2020-02-13')
-        //     .then((data: any) => {
-        //         const priceData = data['price_data'];
-        //         const chartData: Array<Array<number>> = []
-        //         Object.keys(priceData).forEach(key => {
-        //             chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
-        //         });
-        //         let i = 0;
-
-        //         setInterval(() => {
-        //             const series = this.state.options.series;
-        //             series[0].data = chartData.slice(0, i);
-        //             series[0]['color'] = '#f45531';
-        //             this.setState({options: {...this.state.options, series: series}});
-        //             i+=1;
-        //         }, 1000);
-               
-        //         // this.setState({options: {...this.state.options, series: series}});
-        //     });
-    }
-
     render() {
-        const priceData: { [key: string]: string } = _.get(this.props.dailyData, this.props.symbolId, { price_data: {}}).price_data;
-        const chartData: Array<Array<number>> = [];
-        Object.keys(priceData).forEach(key => {
-            chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
-        });
+        const chartData: Array<Array<number>> = _.get(this.props.dailyData, this.props.symbolId, { normalizedData: []}).normalizedData;
         const series = this.state.options.series;
         series[0].data = chartData;
         series[0]['color'] = '#f45531';

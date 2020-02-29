@@ -1,4 +1,4 @@
-export interface StockPosition {
+export interface IStockPosition {
     id: number,
     portfolio: number,
     stock: number,
@@ -6,7 +6,7 @@ export interface StockPosition {
     purchase_price: String
 }
 
-export interface StockPortfolio {
+export interface IStockPortfolio {
     id: number,
     user: number,
     principal: String,
@@ -14,7 +14,7 @@ export interface StockPortfolio {
     properties: {
         watch_list: Array<number>
     }
-    stockposition_set: Array<StockPosition>
+    stockposition_set: Array<IStockPosition>
 }
 
 export const DefaultStockPortfolio = {
