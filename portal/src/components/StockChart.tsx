@@ -4,17 +4,12 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import Loader from 'react-loader-spinner';
 
-import { loadDailyDataAction } from '../actions/stockActions';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const mapStateToProps = (state: any) => {
     const { dailyData } = state.stockReducer;
     return { dailyData };
 };
-
-const mapDispatchToProps = (dispatch: any) => ({
-    loadDailyDataAction: (symbol: string, date: string) => dispatch(loadDailyDataAction(symbol, date))
-})
 
 interface State {
     options: any
@@ -27,7 +22,6 @@ interface Props {
     height?: number,
     title?: string,
     loading?: boolean,
-    loadDailyDataAction: (symbol: string, date: string) => any
 }
 
 class Chart extends Component<Props, State> {
@@ -155,4 +149,4 @@ class Chart extends Component<Props, State> {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Chart);
+export default connect(null, null)(Chart);

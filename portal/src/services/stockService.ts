@@ -7,10 +7,13 @@ export const loadStocks = (symbolIds: Array<number>) => {
     });
 }
 
-export const loadDailyStockData = (symbol: string, date: string) => 
-    axios.get(`/daily_stock_data/`, {
-        params: { symbol, date }
+export const loadDailyStockData = (symbolIds: Array<number>, date: string) => {
+    const ids = symbolIds.join('|');
+
+    return axios.get(`/daily_stock_data/`, {
+        params: { symbol: ids, date }
     });
+}
 
 
 export const autocomplete = (q : string, cancelToken : any) =>

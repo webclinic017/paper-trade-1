@@ -30,7 +30,7 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = (dispatch: any) => ({
     loadStockPortfolios: (userId: number) => dispatch(loadStockPortfoliosAction(userId)),
     loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
-    loadDailyDataAction: (symbol: string, date: string) => dispatch(loadDailyDataAction(symbol, date)),
+    loadDailyDataAction: (symbolIds: Array<number>, date: string) => dispatch(loadDailyDataAction(symbolIds, date)),
     getCurrentUser: () => dispatch(getCurrentUserAction())
 })
 

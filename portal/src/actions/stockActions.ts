@@ -36,9 +36,9 @@ export const loadStocksAction = (symbolIds: Array<number>) => (dispatch: any) =>
     });
 }
 
-export const loadDailyDataAction = (symbol: string, date: string) => (dispatch: any) => {
+export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (dispatch: any) => {
 
-    return loadDailyStockData(symbol, date)
+    return loadDailyStockData(symbolIds, date)
         .then(res => {
             const data = res.data
 

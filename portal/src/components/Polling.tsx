@@ -3,12 +3,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../reducers/rootReducer';
 
 const mapStateToProps = (state: AppState) => {
-    const { stockPortfolios } = state.stockPortfolioReducer;
-    let watchList: Array<number> = []
-    stockPortfolios.forEach(sp => {
-        watchList = watchList.concat(sp.properties.watch_list);
-    })
-    
+    const { watchList } = state.stockPortfolioReducer;
     return { watchList };
 }
 

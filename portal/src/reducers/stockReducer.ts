@@ -2,17 +2,17 @@ import { Stock, DailyStockData } from '../models/stock';
 import { LOAD_STOCKS, LOAD_DAILY_DATA, StockActionTypes } from '../actions/stockActions';
 
 export interface StockState {
-    'dailyData': {
+    dailyData: {
         [key: number]: DailyStockData
     } ,
-    'stocks': {
+    stocks: {
         [key: number]: Stock,
     }
 }
 
 const initialState: StockState = {
-    'dailyData': {},
-    'stocks': {}
+    dailyData: {},
+    stocks: {}
 }
 
 export default (state = initialState, action: StockActionTypes) => {
