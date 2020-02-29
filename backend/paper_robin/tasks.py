@@ -11,7 +11,7 @@ def hello():
 
 
 @app.task
-def get_intra_day_data(symbols=[], date):
+def get_intra_day_data(date, symbols=[]):
     pass
 
 

@@ -2,9 +2,15 @@ from rest_framework import serializers
 from paper_robin.apps.stock.models import (
     DailyStockData,
     Stock,
+    StockExchange,
     StockPortfolio,
     StockPosition,
 )
+
+class StockExchangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockExchange
+        fields = ["name_abbr", "name"]
 
 class StockSerializer(serializers.ModelSerializer):
     class Meta:

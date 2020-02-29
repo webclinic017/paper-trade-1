@@ -7,9 +7,16 @@ from model_utils.models import TimeStampedModel
 from paper_robin.apps.user.models import User
 
 
+class StockExchange(TimeStampedModel):
+    name_abbr = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=255)
+    timezone = models.CharField(max_length=50)
+
+
 class Stock(TimeStampedModel):
-    symbol = models.CharField(max_length=15, unique=True, db_index=True)
+    symbol = models.CharField(max_length=25, unique=True, db_index=True)
     name = models.CharField(max_length=255, db_index=True)
+    exchanges = models.ManyToManyField(StockExchange)
 
 
 class StockPortfolio(TimeStampedModel):

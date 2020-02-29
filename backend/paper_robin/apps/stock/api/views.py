@@ -7,16 +7,26 @@ from django.db.models import Q
 from paper_robin.apps.stock.models import (
     DailyStockData,
     Stock,
+    StockExchange,
     StockPortfolio,
     StockPosition,
 )
 from paper_robin.apps.stock.api.serializers import (
     DailyStockDataSerializer,
+    StockSerializer,
+    StockExchangeSerializer,
     StockPortfolioSerializer,
     StockPositionSerializer,
-    StockSerializer,
 )
 
+
+class StockExchangeViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A viewset for viewing stock exchanges.
+    """
+
+    serializer_class = StockExchangeSerializer
+    queryset = StockExchange.objects.all()
 
 class StockViewSet(viewsets.ReadOnlyModelViewSet):
     """

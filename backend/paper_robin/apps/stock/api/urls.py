@@ -6,8 +6,9 @@ from paper_robin.apps.stock.api import views
 app_name = "stocks"
 
 router = DefaultRouter()
-router.register("stocks", views.StockViewSet)
 router.register("daily_stock_data", views.DailyStockDataViewSet)
+router.register("stocks", views.StockViewSet)
+router.register("stock_exchanges", views.StockExchangeViewSet)
 router.register("stock_portfolios", views.StockPortfolioViewSet)
 router.register("stocks_positions", views.StockPositionViewSet)
 
