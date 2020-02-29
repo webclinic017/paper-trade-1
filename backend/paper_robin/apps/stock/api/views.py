@@ -72,6 +72,18 @@ class StockPortfolioViewSet(viewsets.ModelViewSet):
     serializer_class = StockPortfolioSerializer
     queryset = StockPortfolio.objects.all()
 
+    def list(self, request, *args, **kwargs):
+        query_params = request.query_params
+
+        q_objects = Q()
+        for param in query_params:
+            q_objects &= Q(**{param: query_params[param]})
+
+        data = StockPortfolio.objects.filter(q_objects)
+        serializer = self.get_serializer(data, many=True)
+
+        return Response(serializer.data)
+
 
 class StockPositionViewSet(viewsets.ModelViewSet):
     """

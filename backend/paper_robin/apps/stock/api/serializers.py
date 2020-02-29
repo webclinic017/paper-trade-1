@@ -27,13 +27,17 @@ class DailyStockDataSerializer(serializers.ModelSerializer):
         ]
 
 
-class StockPortfolioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StockPortfolio
-        fields = ["id", "user", "principal", "purchasing_power", "properties"]
-
-
 class StockPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockPosition
         fields = ["id", "portfolio", "stock", "shares", "purchase_price"]
+
+class StockPortfolioSerializer(serializers.ModelSerializer):
+    stockposition_set = StockPositionSerializer(many=True)    
+
+    class Meta:
+        model = StockPortfolio
+        fields = ["id", "user", "principal", "purchasing_power", "properties", "stockposition_set"]
+
+
+
