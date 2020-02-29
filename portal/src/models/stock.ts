@@ -3,3 +3,13 @@ export interface Stock {
     name: string,
     symbol: string
 }
+
+export interface DailyStockData {
+    id: number,
+    symbol: number,
+    date: string,
+    timezone: string,
+    price_data:  {
+        string: string,
+    }
+}

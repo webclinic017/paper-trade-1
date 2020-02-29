@@ -1,5 +1,12 @@
 import { axios } from '.';
 
+export const loadStocks = (symbolIds: Array<number>) => {
+    const ids = symbolIds.join('|');
+    return axios.get('/stocks/', {
+        params: { id: ids }
+    });
+}
+
 export const loadDailyStockData = (symbol: string, date: string) => 
     axios.get(`/daily_stock_data/`, {
         params: { symbol, date }

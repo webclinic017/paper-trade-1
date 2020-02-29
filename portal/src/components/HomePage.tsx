@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { User } from '../models/user';
+import { Stock } from '../models/stock';
 import { StockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
 import { getStockPortfoliosAction } from '../actions/stockPortfolioActions';
+import { loadStocksAction } from '../actions/stockActions';
 import { getCurrentUserAction } from '../actions/userActions'; 
 import { moneyFormatter } from '../utils'
 import StockChart from './StockChart';
@@ -21,11 +23,13 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
     loadStockPortfolios: (userId: number) => dispatch(getStockPortfoliosAction(userId)),
+    loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
     getCurrentUser: () => dispatch(getCurrentUserAction())
 })
 
 interface Props {
-    loadStockPortfolios: (userId: number) => Promise<Array<StockPortfolio>>
+    loadStockPortfolios: (userId: number) => Promise<Array<StockPortfolio>>,
+    loadStocks: (symbolIds: Array<number>) => Promise<Array<Stock>>,
     getCurrentUser: () => Promise<User>
 }
 
@@ -43,7 +47,14 @@ class HomePage extends Component<Props, State> {
             user => {
                 const userId = user.id;
                 this.props.loadStockPortfolios(userId).then(portfolios => {
-                    console.log("helo")
+                    const watchList = new Set<number>();
+                    portfolios.forEach(p => {
+                        p.stockposition_set.forEach(sp => {
+                            watchList.add(sp.stock);
+                        });
+                    });
+
+                    this.props.loadStocks(Array.from(watchList));
                 });
             }
         )

@@ -55,8 +55,6 @@ class StockViewSet(viewsets.ReadOnlyModelViewSet):
             
             q_objects &= q_object
 
-            print(q_objects)
-
         data = Stock.objects.filter(q_objects)
         serializer = self.get_serializer(data, many=True)
 

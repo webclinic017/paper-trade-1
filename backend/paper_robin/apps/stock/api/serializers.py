@@ -13,7 +13,6 @@ class StockSerializer(serializers.ModelSerializer):
 
 
 class DailyStockDataSerializer(serializers.ModelSerializer):
-    symbol = serializers.CharField(read_only=True, source="symbol.symbol")
 
     class Meta:
         model = DailyStockData
