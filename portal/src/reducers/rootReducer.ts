@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 import authReducer, { authState } from './authReducer';
 import stockReducer, { StockState } from './stockReducer';
-import stockPortfolioReducer, { stockPortfolioState } from './stockPorfolioReducer';
+import stockPortfolioReducer, { stockPortfolioState } from './stockPortfolioReducer';
 import userReducer, { userState } from './userReducer';
 
 export interface AppState {

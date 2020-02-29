@@ -16,15 +16,22 @@ interface GetStockPortfoliosAction {
 export type StockPortfolioActionTypes = UpdateWatchListAction | GetStockPortfoliosAction;
 
 export const getStockPortfoliosAction = (userId: Number) => (dispatch: any) => {
-    getStockPortfolios(userId).then(res => {
-        console.log(res);
+    return getStockPortfolios(userId).then(res => {
+        dispatch({
+            type: GET_STOCK_PORTFOLIOS,
+            payload: res.data
+        });
+        return res.data
     });
 }
 
 export const updateWatchListAction = (updatedList: Array<string>) => (dispatch: any) => {
-    updateWatchList([123], 1);
-    return dispatch({
-        type: UPDATE_WATCHLIST,
-        payload: updatedList
-    })
+    return updateWatchList([123], 1).then(
+        res => {
+            return dispatch({
+                type: UPDATE_WATCHLIST,
+                payload: updatedList
+            });
+        }
+    );
 };

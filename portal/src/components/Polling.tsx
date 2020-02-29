@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { AppState } from '../reducers/rootReducer';
 
-const mapStateToProps = (state: any) => {
-    const { watchList } = state.stockPortfolioReducer;
-    return { watchList };
+const mapStateToProps = (state: AppState) => {
+      const { stockPortfolios, viewing } = state.stockPortfolioReducer;
+    if (stockPortfolios.length > 0) {
+        return { watchList: stockPortfolios[viewing].properties.watchList };
+    } else {
+        return { watchList: [] }
+    }
 }
 
 interface Props {};

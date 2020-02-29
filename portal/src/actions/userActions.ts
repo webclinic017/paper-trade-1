@@ -14,9 +14,9 @@ export const getCurrentUserAction = () => (dispatch: any) => {
     return getCurrentUser().then(res => {
         dispatch({
             type: GET_CURRENT_USER,
-            payload: res
+            payload: res.data
         })
-
-        return res;
+        
+        return res.data;
     });
 };

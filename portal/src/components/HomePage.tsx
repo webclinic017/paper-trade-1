@@ -8,19 +8,31 @@ import { moneyFormatter } from '../utils'
 import { getStockPortfoliosAction } from '../actions/stockPortfolioActions';
 import { getCurrentUserAction } from '../actions/userActions'; 
 import { User } from '../models/user';
+import { StockPortfolio } from '../models/stockPortfolio';
+import { AppState } from '../reducers/rootReducer';
 
+const mapStateToProps = (state: AppState) => {
+    const { stockPortfolios, viewing } = state.stockPortfolioReducer;
+    if (stockPortfolios.length > 0) {
+        return { stockPortfolio: stockPortfolios[viewing] };
+    } else {
+        return { stockPortfolio: {} }
+    }
+}
 
 const mapDispatchToProps = (dispatch: any) => ({
-    loadStockPortfolios: (userId: Number) => dispatch(getStockPortfoliosAction(userId)),
+    loadStockPortfolios: (userId: number) => dispatch(getStockPortfoliosAction(userId)),
     getCurrentUser: () => dispatch(getCurrentUserAction())
 })
 
 interface Props {
-    loadStockPortfolios: (userId: Number) => Promise<any>
+    loadStockPortfolios: (userId: number) => Promise<Array<StockPortfolio>>
     getCurrentUser: () => Promise<User>
 }
 
-interface State {}
+interface State {
+    stockPortfolio: StockPortfolio
+}
 
 class HomePage extends Component<Props, State> { 
     constructor(props: any) {
@@ -28,7 +40,14 @@ class HomePage extends Component<Props, State> {
     }
 
     componentDidMount() {
-        console.log(this.props.getCurrentUser())  
+        this.props.getCurrentUser().then(
+            user => {
+                const userId = user.id;
+                this.props.loadStockPortfolios(userId).then(portfolios => {
+                    console.log("helo")
+                });
+            }
+        )
     }
     
     render() {
@@ -51,4 +70,4 @@ class HomePage extends Component<Props, State> {
     }
 };
   
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -6,7 +6,6 @@ from paper_robin.apps.stock.models import (
     StockPosition,
 )
 
-
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
