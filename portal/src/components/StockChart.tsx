@@ -126,10 +126,9 @@ class Chart extends Component<Props, State> {
             chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
         });
         const series = this.state.options.series;
-        series.data = chartData;
+        series[0].data = chartData;
         series[0]['color'] = '#f45531';
         const options = {...this.state.options, series: series};
-        console.log(options);
 
         if (this.props.loading) {
             return (
