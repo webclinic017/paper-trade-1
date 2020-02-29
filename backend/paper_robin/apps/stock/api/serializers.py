@@ -27,6 +27,8 @@ class DailyStockDataSerializer(serializers.ModelSerializer):
 
 
 class StockPositionSerializer(serializers.ModelSerializer):
+    stock_name = serializers.CharField(read_only=True, source="stock.name")
+    
     class Meta:
         model = StockPosition
         fields = ["id", "portfolio", "stock", "shares", "purchase_price"]

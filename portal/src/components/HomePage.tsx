@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 
-import StockChart from './StockChart';
-import SideBar from './SideBar';
-import { moneyFormatter } from '../utils'
-import { getStockPortfoliosAction } from '../actions/stockPortfolioActions';
-import { getCurrentUserAction } from '../actions/userActions'; 
 import { User } from '../models/user';
 import { StockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
+import { getStockPortfoliosAction } from '../actions/stockPortfolioActions';
+import { getCurrentUserAction } from '../actions/userActions'; 
+import { moneyFormatter } from '../utils'
+import StockChart from './StockChart';
+import SideBar from './SideBar';
 
 const mapStateToProps = (state: AppState) => {
     const { stockPortfolios, viewing } = state.stockPortfolioReducer;

@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { AppState } from '../reducers/rootReducer';
+import { updateWatchListAction } from '../actions/stockPortfolioActions';
 import StockChart from './StockChart';
 import StockPrice from './StockPrice';
-import { updateWatchListAction } from '../actions/stockPortfolioActions';
-import { AppState } from '../reducers/rootReducer';
-
 
 const mapStateToProps = (state: AppState) => {
     const { stockPortfolios, viewing } = state.stockPortfolioReducer;
