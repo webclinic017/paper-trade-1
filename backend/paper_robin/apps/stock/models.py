@@ -46,4 +46,5 @@ class DailyStockData(TimeStampedModel):
     symbol = models.ForeignKey("Stock", on_delete=models.CASCADE)
     date = models.DateField()
     time_zone = models.CharField(max_length=50)
+    last_refreshed = models.CharField(max_length=50)
     price_data = JSONField()

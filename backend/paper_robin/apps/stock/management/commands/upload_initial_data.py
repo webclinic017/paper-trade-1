@@ -20,7 +20,6 @@ class Command(BaseCommand):
 
             for row in csv_reader:
                 try:
-                    # print(row[0], row[1], row[2])
                     StockExchange.objects.create(name_abbr=row[0], name=row[1], timezone=row[2])
                 except:
                     break
@@ -38,24 +37,5 @@ class Command(BaseCommand):
                     stock = Stock.objects.create(name=row[1], symbol=row[0])
                     stock.exchanges.add(exchange)
                 except:
-                    print(row, "wtf")
-
-        with open(
-            os.path.join(BASE_DIR, "paper_robin/data/snap-intraday-sample.csv")
-        ) as csvfile:
-            csv_reader = csv.reader(csvfile)
-            next(csv_reader)
-
-            snap_stock = Stock.objects.filter(symbol="SNAP").first()
-
-            price_data = {}
-            for row in csv_reader:
-                time_stamp = timestring_to_epoch(row[0])
-                price_data[time_stamp] = row[1]
-
-            DailyStockData.objects.create(
-                symbol=snap_stock,
-                date=date(2020, 2, 13),
-                time_zone="US/Eastern",
-                price_data=price_data,
-            )
+                    break
+            
