@@ -68,11 +68,8 @@ def fetch_intraday_data(symbol):
 pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
-def get_intraday_data():
+def get_intraday_data(): 
     symbols = ['MSFT', "bob"]
     pool.map(fetch_intraday_data, symbols)
-    
-    
-
 
 
