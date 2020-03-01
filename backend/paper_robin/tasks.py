@@ -9,7 +9,7 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 from paper_robin.celery import app
-from paper_robin.apps.stock.models import DailyStockData, Stock
+from paper_robin.apps.stock.models import DailyStockData, Stock, StockPortfolio
 from paper_robin.data.utils import timestring_to_epoch
 
 def merge(d1, d2, merge_fn=lambda x,y:y):
@@ -73,9 +73,18 @@ pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
 def get_intraday_data(): 
+    connected_user_portfolios = StockPortfolio.objects.filter(user__connected=True)
+    print(connected_user_portfolios)
 
-    symbols = ['MSFT', "bob"]
+    watched_symbols = set()
+        
+    for portfolio in connected_user_portfolios:
+        watch_list = portfolio.properties.get('watch_list', [])
+        watched_symbols.update(watch_list)
+    
+    symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
+    print(symbols, watched_symbols)
     pool.map(fetch_intraday_data, symbols)
 
     channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "herllo!!"})
+    async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "ready"})
