@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
@@ -8,6 +9,7 @@ from model_utils.models import TimeStampedModel
 class User(AbstractUser):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
+    last_connected = models.DateTimeField(default=timezone.now)
 
 
 class UserProfile(TimeStampedModel):
@@ -18,3 +20,4 @@ class UserProfile(TimeStampedModel):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+

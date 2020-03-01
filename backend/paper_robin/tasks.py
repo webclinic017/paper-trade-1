@@ -58,6 +58,7 @@ def fetch_intraday_data(symbol):
                         symbol=stock,
                         date=date,
                         time_zone=tz,
+                        last_refreshed=data.get('3. Last Refreshed', ""),
                         price_data=grouped_series_data[date],
                     )
                 except Exception as ex:

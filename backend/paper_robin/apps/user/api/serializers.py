@@ -21,12 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "is_superuser",
             "password",
+            "last_connected"
         ]
 
         read_only_fields = (
             "username",
             "email",
             "is_superuser",
+            "last_connected"
         )
 
         extra_kwargs = {

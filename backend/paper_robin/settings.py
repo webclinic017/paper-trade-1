@@ -30,7 +30,6 @@ DEBUG = int(os.environ.get("DEBUG", default=1))
 default_allowed_hosts = "localhost"
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default_allowed_hosts).split(" ")
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,6 +56,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "paper_robin.middleware.CustomViewMiddleWare",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
