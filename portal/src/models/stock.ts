@@ -10,7 +10,7 @@ export interface IDailyStockData {
     date: string,
     timezone: string,
     price_data:  {
-        [key: string]: string,
+        [key: string]: { [key: string]: string },
     },
     normalizedData: Array<Array<number>>
 }
