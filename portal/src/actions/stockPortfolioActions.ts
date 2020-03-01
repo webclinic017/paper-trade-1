@@ -21,7 +21,7 @@ export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => 
         
         const stockPortfolios: Array<IStockPortfolio> = res.data;
         const watchList = new Set<number>();
-        console.log(stockPortfolios, "wd")
+
         stockPortfolios.forEach(p => {
             p.stockposition_set.forEach(sp => watchList.add(sp.stock));
             p.properties.watch_list.forEach(s => watchList.add(s));

@@ -63,6 +63,8 @@ def fetch_intraday_data(symbol):
                     )
                 except Exception as ex:
                     print(ex)
+    except Exception as ex:
+        print(ex)
 
 
 pool = ThreadPoolExecutor(max_workers=5)
