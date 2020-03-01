@@ -5,6 +5,8 @@ import json
 from datetime import datetime
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from paper_robin.celery import app
 from paper_robin.apps.stock.models import DailyStockData, Stock
@@ -63,15 +65,17 @@ def fetch_intraday_data(symbol):
                     )
                 except Exception as ex:
                     print(ex)
-    except Exception as ex:
-        print(ex)
+    else:
+        print(r.status_code, "failed to fetch intraday day for {}".format(symbol))
 
 
 pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
 def get_intraday_data(): 
+
     symbols = ['MSFT', "bob"]
     pool.map(fetch_intraday_data, symbols)
 
-
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "herllo!!"})

@@ -9,7 +9,8 @@ from model_utils.models import TimeStampedModel
 class User(AbstractUser):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    last_connected = models.DateTimeField(default=timezone.now)
+    last_connected = models.DateTimeField(default=timezone.now) 
+    connected = models.BooleanField(default=False)
 
 
 class UserProfile(TimeStampedModel):

@@ -18,11 +18,12 @@ import SideBar from './SideBar';
 
 
 const mapStateToProps = (state: AppState) => {
+    const { dailyData } = state.stockReducer;
     const { stockPortfolios, watchList, viewing } = state.stockPortfolioReducer;
     if (stockPortfolios.length > 0) {
-        return { stockPortfolio: stockPortfolios[viewing], watchList };
+        return { stockPortfolio: stockPortfolios[viewing], watchList, dailyData };
     } else {
-        return { stockPortfolio: DefaultStockPortfolio, watchList };
+        return { stockPortfolio: DefaultStockPortfolio, watchList, dailyData };
     }
 };
 
@@ -35,7 +36,10 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 interface StateProps {
     stockPortfolio: IStockPortfolio,
-    watchList: Array<number>
+    watchList: Array<number>,
+    dailyData: {
+        [key: number]: IDailyStockData
+    }
 }
 
 interface DispatchProps {
