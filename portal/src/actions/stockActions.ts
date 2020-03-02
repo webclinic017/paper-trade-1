@@ -41,9 +41,9 @@ export const loadStocksAction = (symbolIds: Array<number>) => (dispatch: any) =>
     });
 }
 
-export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (dispatch: any) => {
+export const loadDailyDataAction = (symbolIds: Array<number>, date: string, firstLoad: boolean=false) => (dispatch: any) => {
 
-    return loadDailyStockData(symbolIds, date)
+    return loadDailyStockData(symbolIds, date, firstLoad)
         .then(res => {
             const data: Array<IDailyStockData> = res.data
             const normalizedData: { [key: number]: IDailyStockData }= {};

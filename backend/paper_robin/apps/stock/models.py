@@ -50,4 +50,3 @@ class DailyStockData(TimeStampedModel):
     time_zone = models.CharField(max_length=50)
     last_refreshed = models.CharField(max_length=50)
     price_data = JSONField()
-

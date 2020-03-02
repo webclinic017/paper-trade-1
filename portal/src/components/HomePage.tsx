@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { IStock, IDailyStockData } from '../models/stock';
-import { IStockPortfolio, DefaultStockPortfolio } from '../models/stockPortfolio';
+import { IStockPortfolio } from '../models/stockPortfolio';
 import { AppState } from '../reducers/rootReducer';
 import { moneyFormatter } from '../utils'
 import StockChart from './StockChart';

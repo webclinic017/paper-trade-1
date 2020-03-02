@@ -1,16 +1,18 @@
-import { UPDATE_WATCHLIST, LOAD_STOCK_PORTFOLIOS, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
+import { UPDATE_WATCHLIST, UPDATE_VIEWLIST, LOAD_STOCK_PORTFOLIOS, StockPortfolioActionTypes } from '../actions/stockPortfolioActions';
 import { IStockPortfolio } from '../models/stockPortfolio';
 
 export interface stockPortfolioState {
     viewing: number, // which portfolio the user is viewing
     stockPortfolios: Array<IStockPortfolio>,
-    watchList: Array<number>
+    watchList: Array<number>,
+    viewList: Array<number> // revisit this approach
 }
 
 const initialState: stockPortfolioState = {
     viewing: 0,
     stockPortfolios: [],
-    watchList: []
+    watchList: [],
+    viewList: []
 }
 
 export default (state = initialState, action: StockPortfolioActionTypes) => {
@@ -25,6 +27,11 @@ export default (state = initialState, action: StockPortfolioActionTypes) => {
             return {
                 ...state,
                 stockPortfolios: [...state.stockPortfolios.filter(s => s.id !== action.payload.id), action.payload]
+            }
+        case UPDATE_VIEWLIST:
+            return {
+                ...state,
+                viewList: action.payload
             }
         default: return state
     }

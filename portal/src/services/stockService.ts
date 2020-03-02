@@ -7,11 +7,11 @@ export const loadStocks = (symbolIds: Array<number>) => {
     });
 }
 
-export const loadDailyStockData = (symbolIds: Array<number>, date: string) => {
+export const loadDailyStockData = (symbolIds: Array<number>, date: string, firstLoad: boolean=false) => {
     const ids = symbolIds.join('|');
 
     return axios.get(`/daily_stock_data/`, {
-        params: { symbol: ids, date }
+        params: { symbol: ids, date, firstLoad }
     });
 }
 

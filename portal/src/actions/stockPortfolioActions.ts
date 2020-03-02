@@ -2,6 +2,7 @@ import { IStockPortfolio } from '../models/stockPortfolio';
 import { updateWatchList, loadStockPortfolios } from '../services/stockPortfolioService'; 
 
 export const UPDATE_WATCHLIST = 'UPDATE_WATCHLIST';
+export const UPDATE_VIEWLIST = 'UPDATE_VIEWLIST';
 export const LOAD_STOCK_PORTFOLIOS = 'GET_STOCK_PORTFOLIOS';
 
 interface UpdateWatchListAction {
@@ -17,7 +18,12 @@ interface LoadStockPortfoliosAction {
     }
 }
 
-export type StockPortfolioActionTypes = UpdateWatchListAction | LoadStockPortfoliosAction;
+interface UpdateViewListAction {
+    type: typeof UPDATE_VIEWLIST,
+    payload: Array<number>;
+}
+
+export type StockPortfolioActionTypes = UpdateWatchListAction | LoadStockPortfoliosAction | UpdateViewListAction;
 
 export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => {
     return loadStockPortfolios(userId).then(res => {
@@ -54,3 +60,12 @@ export const updateWatchListAction = (updatedList: Array<number>, portfolioId: n
         }
     );
 };
+
+export const updateViewListAction = (updatedList: Array<number>) => (dispatch: any) => {
+    dispatch({
+        type: UPDATE_VIEWLIST,
+        payload: updatedList
+    });
+
+    return updatedList;
+}

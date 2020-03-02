@@ -135,7 +135,7 @@ class Chart extends Component<Props, State> {
     }
 
     changeChartType = () => {
-        const chartType = this.state.chartType == 'spline' ? 'candlestick' : 'spline';
+        const chartType = this.state.chartType === 'spline' ? 'candlestick' : 'spline';
         this.setState({ chartType });
     }
 

@@ -18,7 +18,7 @@ from paper_robin.apps.stock.api.serializers import (
     StockPortfolioSerializer,
     StockPositionSerializer,
 )
-
+from paper_robin.tasks import get_intraday_data
 
 class StockExchangeViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -84,15 +84,25 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
 
         q_objects = Q()
         for param in query_params:
-            q_object = Q()
+            if hasattr(DailyStockData, param):
+                q_object = Q()
 
-            value = query_params[param].split('|')
-            for v in value:
-                q_object |= Q(**{param: v})
-            
-            q_objects &= q_object
+                value = query_params[param].split('|')
+                for v in value:
+                    q_object |= Q(**{param: v})
+                
+                q_objects &= q_object
 
         data = DailyStockData.objects.filter(q_objects)
+        query_symbol_ids = query_params.get('symbol', '').split('|')
+        first_load = query_params.get('firstLoad', False)
+
+        if len(data) != len(query_symbol_ids) and first_load:
+            fetched_symbol_ids = [str(dsd.symbol.id) for dsd in data]
+            to_get = [sid for sid in query_symbol_ids if sid not in fetched_symbol_ids]
+            get_intraday_data.run(symbols=to_get)
+            
+
         serializer = self.get_serializer(data, many=True)
 
         return Response(serializer.data)

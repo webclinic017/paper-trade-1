@@ -68,21 +68,20 @@ def fetch_intraday_data(symbol):
 pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
-def get_intraday_data(symbols=[]): 
+def get_intraday_data(symbols=None): 
     connected_user_portfolios = StockPortfolio.objects.filter(user__connected=True)
-
     if not symbols:
         watched_symbols = set()
         
         for portfolio in connected_user_portfolios:
             watch_list = portfolio.properties.get('watch_list', [])
             watched_symbols.update(watch_list)
+    else:
+        watched_symbols = symbols
     
-        symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
-
+    symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
     futures = [pool.submit(fetch_intraday_data, symbol) for symbol in symbols]
     wait(futures, timeout=None, return_when=ALL_COMPLETED) 
 
     channel_layer = get_channel_layer()
-    print(connected_user_portfolios, channel_layer)
     async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "ready"})

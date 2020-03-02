@@ -11,9 +11,9 @@ import { loadCurrentUserAction } from '../actions/userActions';
 import { getLastTradingDay } from '../utils'
 
 const mapStateToProps = (state: AppState) => {
-    const { watchList } = state.stockPortfolioReducer;
+    const { watchList, viewList } = state.stockPortfolioReducer;
     const { username } = state.userReducer;
-    return { watchList, username };
+    return { watchList, username, viewList };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 interface StateProps {
     watchList: Array<number>, 
+    viewList: Array<number>,
     username: string
 }
 
