@@ -19,5 +19,5 @@ export const loadDailyStockData = (symbolIds: Array<number>, date: string) => {
 export const autocomplete = (q : string, cancelToken : any) =>
     axios.get(`/stocks/autocomplete/${q}`, {
         cancelToken: cancelToken,
-        headers: { 'Cache-Control': 'no-cache' }
+        headers: { 'Cache-Control': 'no-cache, no-store' }
     });

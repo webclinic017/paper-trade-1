@@ -80,7 +80,7 @@ class Search extends Component {
             suggestions = (
                 this.state.suggestions.map((s: { symbol: string, name: string, id: number }) => 
                     <li className='list-group-item text-white bg-transparent'
-                        key={s.id} onClick={() => this.select(s.id)}
+                        key={s.id} onMouseDown={() => this.select(s.id)}
                     >
                         ({this.highlight(this.state.searchString, s.symbol, true)})
                         &nbsp;
@@ -99,7 +99,7 @@ class Search extends Component {
         return (
             <Form className='search position-relative'>
                 <FormControl 
-                    type='text' ref={'search' as any} placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions} 
+                    type='text' ref={'search' as any} placeholder='Search' onChange={this.handleChange} onBlur={this.hideSuggestions}
                 />
                 <ul className='list-group search-suggestions'>
                     { this.state.showSuggestions ? suggestions : null }

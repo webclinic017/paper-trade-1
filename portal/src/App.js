@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Router , Route, Switch } from 'react-router-dom'
 
 import { HomePage, LoginPage, Nav, Polling, PrivateComponent, PrivateRoute, StockPage } from './components';
+import history from './history';
 
 const Profile = () => (
   <div className="text-white"> 
@@ -11,7 +12,7 @@ const Profile = () => (
 
 const App = () => (
   <div className="app">
-    <Router>
+    <Router history={history}>
       <div>
         <PrivateComponent component={Nav} />
         <PrivateComponent component={Polling} />
