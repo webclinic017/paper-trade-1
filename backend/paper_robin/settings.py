@@ -159,7 +159,7 @@ CELERY_RESULT_SERIALIZER = "json"
 
 CELERY_BEAT_SCHEDULE = {
     "hello": {
-        "task": "paper_robin.tasks.hello",
+        "task": "paper_robin.tasks.get_intraday_data",
         "schedule": crontab(),  # execute every minute
     }
 }

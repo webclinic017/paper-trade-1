@@ -7,6 +7,7 @@ import PrivateComponent from './PrivateComponent'
 import PrivateRoute from './PrivateRoute';
 import SideBar from './SideBar';
 import StockPrice from './StockPrice';
+import StockPage from './StockPage';
 
 export { 
     Chart,
@@ -17,5 +18,6 @@ export {
     PrivateComponent,
     PrivateRoute,
     SideBar,
-    StockPrice
+    StockPrice,
+    StockPage
  }

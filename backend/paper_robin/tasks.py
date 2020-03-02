@@ -28,10 +28,6 @@ def merge(d1, d2, merge_fn=lambda x,y:y):
     return result
 
 
-@app.task
-def hello():
-    print("hello")
-
 def fetch_intraday_data(symbol):
     payload = {'function': 'TIME_SERIES_INTRADAY', 'symbol': symbol, 'interval': '1min', 'apikey': 'demo'}
     r = requests.get('https://www.alphavantage.co/query', params=payload)
@@ -72,17 +68,17 @@ def fetch_intraday_data(symbol):
 pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
-def get_intraday_data(): 
+def get_intraday_data(symbols=[]): 
     connected_user_portfolios = StockPortfolio.objects.filter(user__connected=True)
-    print(connected_user_portfolios)
 
-    watched_symbols = set()
+    if not symbols:
+        watched_symbols = set()
         
-    for portfolio in connected_user_portfolios:
-        watch_list = portfolio.properties.get('watch_list', [])
-        watched_symbols.update(watch_list)
+        for portfolio in connected_user_portfolios:
+            watch_list = portfolio.properties.get('watch_list', [])
+            watched_symbols.update(watch_list)
     
-    symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
+        symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
 
     futures = [pool.submit(fetch_intraday_data, symbol) for symbol in symbols]
     wait(futures, timeout=None, return_when=ALL_COMPLETED) 

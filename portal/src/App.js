@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { HomePage, LoginPage, Nav, Polling, PrivateComponent, PrivateRoute } from './components';
+import { HomePage, LoginPage, Nav, Polling, PrivateComponent, PrivateRoute, StockPage } from './components';
 
 const Profile = () => (
-  <div>
+  <div className="text-white"> 
     Profile
   </div>
 )
@@ -18,6 +18,7 @@ const App = () => (
         <Switch>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/stocks/:id" component={StockPage} />
           <Route path='/login' component={LoginPage} />
         </Switch>
       </div>

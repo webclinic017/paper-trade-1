@@ -2,8 +2,13 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { AppState } from '../reducers/rootReducer';
-import { IDailyStockData } from '../models/stock';
-import { loadDailyDataAction } from '../actions/stockActions';
+import { IUser } from '../models/user';
+import { IDailyStockData, IStock } from '../models/stock';
+import { IStockPortfolio } from '../models/stockPortfolio';
+import { loadStockPortfoliosAction } from '../actions/stockPortfolioActions';
+import { loadStocksAction, loadDailyDataAction, initialDataLoadedAction } from '../actions/stockActions';
+import { loadCurrentUserAction } from '../actions/userActions';
+import { getPreviousWorkDay } from '../utils'
 
 const mapStateToProps = (state: AppState) => {
     const { watchList } = state.stockPortfolioReducer;
@@ -13,6 +18,10 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
     loadDailyData: (symbolIds: Array<number>, date: string) => dispatch(loadDailyDataAction(symbolIds, date)),
+    loadStockPortfolios: (userId: number) => dispatch(loadStockPortfoliosAction(userId)),
+    loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
+    loadCurrentUser: () => dispatch(loadCurrentUserAction()),
+    initialDataLoaded: () => dispatch(initialDataLoadedAction())
 });
 
 interface StateProps {
@@ -21,7 +30,11 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<IDailyStockData>>
+    loadDailyData: (symbolIds: Array<number>, date: string) => Promise<Array<IDailyStockData>>,
+    loadStockPortfolios: (userId: number) => Promise<Array<IStockPortfolio>>,
+    loadStocks: (symbolIds: Array<number>) => Promise<Array<IStock>>,
+    loadCurrentUser: () => Promise<IUser>,
+    initialDataLoaded: () => Promise<null>
 }
 
 type Props = StateProps & DispatchProps;
@@ -36,6 +49,31 @@ class Polling extends Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.state = { timerID: null, socket: null }
+    }
+
+    componentDidMount() {
+        this.props.loadCurrentUser().then(
+            user => {
+                const userId = user.id;
+                this.props.loadStockPortfolios(userId).then(portfolios => {
+                    const watchedSymbols = new Set<number>();
+                    portfolios.forEach(p => {
+                        p.stockposition_set.forEach(sp => watchedSymbols.add(sp.stock));
+                        p.properties.watch_list.forEach(s => watchedSymbols.add(s));
+                    });                    
+
+                    const watchList = Array.from(watchedSymbols);
+
+                    if (watchList.length > 0) {
+                        const date = getPreviousWorkDay();
+                        this.props.loadStocks(watchList);
+                        this.props.loadDailyData(watchList, date).then(res => this.props.initialDataLoaded());
+                    } else {
+                        this.props.initialDataLoaded();
+                    }
+                });
+            }
+        );
     }
 
     componentDidUpdate() {

@@ -133,6 +133,10 @@ class Chart extends Component<Props, State> {
           this.state = { options: options }
     }
 
+    componentDidUpdate() {
+        console.log("wtf");
+    }
+
     render() {
         const dailyData =  _.get(this.props.dailyData, this.props.symbolId, { normalizedData: [], volumeData: []});
         const chartData: Array<Array<number>> = dailyData.normalizedData;

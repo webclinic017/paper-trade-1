@@ -3,6 +3,7 @@ import { loadDailyStockData, loadStocks } from '../services/stockService';
 
 export const LOAD_STOCKS = 'LOAD_STOCKS';
 export const LOAD_DAILY_DATA = 'LOAD_DAILY_DATA';
+export const INITAL_DATA_LOADED = 'INITAL_DATA_LOADED';
 
 export interface LoadDailyDataAction {
     type: typeof LOAD_DAILY_DATA,
@@ -14,7 +15,11 @@ export interface LoadStocksAction {
     payload: Array<IStock>
 }
 
-export type StockActionTypes = LoadDailyDataAction | LoadStocksAction;
+export interface InitialDataLoadedAction {
+    type: typeof INITAL_DATA_LOADED
+}
+
+export type StockActionTypes = LoadDailyDataAction | LoadStocksAction | InitialDataLoadedAction;
 
 export const loadStocksAction = (symbolIds: Array<number>) => (dispatch: any) => {
     return loadStocks(symbolIds).then(res => {
@@ -76,3 +81,5 @@ export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (
             return normalizedData
         });
 }
+
+export const initialDataLoadedAction = () => (dispatch: any) => dispatch({ type: INITAL_DATA_LOADED });
