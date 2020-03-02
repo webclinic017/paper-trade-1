@@ -84,4 +84,5 @@ def get_intraday_data(symbols=[]):
     wait(futures, timeout=None, return_when=ALL_COMPLETED) 
 
     channel_layer = get_channel_layer()
+    print(connected_user_portfolios, channel_layer)
     async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "ready"})

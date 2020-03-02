@@ -11,7 +11,10 @@ interface UpdateWatchListAction {
 
 interface LoadStockPortfoliosAction {
     type: typeof LOAD_STOCK_PORTFOLIOS,
-    payload: any
+    payload: { 
+        stockPortfolios: Array<IStockPortfolio>,
+        watchList: Array<number>
+    }
 }
 
 export type StockPortfolioActionTypes = UpdateWatchListAction | LoadStockPortfoliosAction;
@@ -39,13 +42,15 @@ export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => 
     });
 };
 
-export const updateWatchListAction = (updatedList: Array<string>) => (dispatch: any) => {
-    return updateWatchList([123], 1).then(
+export const updateWatchListAction = (updatedList: Array<number>, portfolioId: number) => (dispatch: any) => {
+    return updateWatchList(updatedList, portfolioId).then(
         res => {
-            return dispatch({
+            dispatch({
                 type: UPDATE_WATCHLIST,
-                payload: updatedList
+                payload: res.data
             });
+
+            return res.data
         }
     );
 };

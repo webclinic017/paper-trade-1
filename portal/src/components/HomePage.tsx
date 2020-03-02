@@ -14,17 +14,12 @@ import SideBar from './SideBar';
 
 const mapStateToProps = (state: AppState) => {
     const { dailyData, stocks, initialDataLoaded } = state.stockReducer;
-    const { stockPortfolios, watchList, viewing } = state.stockPortfolioReducer;
-    if (stockPortfolios.length > 0) {
-        return { stockPortfolio: stockPortfolios[viewing], watchList, dailyData, stocks, initialDataLoaded };
-    } else {
-        return { stockPortfolio: DefaultStockPortfolio, watchList, dailyData, stocks, initialDataLoaded };
-    }
+    const { stockPortfolios, viewing } = state.stockPortfolioReducer;
+    return { stockPortfolio: stockPortfolios[viewing], dailyData, stocks, initialDataLoaded };
 };
 
 interface StateProps {
     stockPortfolio: IStockPortfolio,
-    watchList: Array<number>,
     dailyData: {
         [key: number]: IDailyStockData
     },
@@ -41,10 +36,6 @@ class HomePage extends Component<Props> {
         super(props);
     }
 
-    componentDidMount() {
-        this.setState({ loading: false });
-    }
-    
     render() {
 
         if (!this.props.initialDataLoaded) {
@@ -69,7 +60,7 @@ class HomePage extends Component<Props> {
                         <StockChart symbolId={2126} allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
-                        <SideBar watchList={this.props.watchList} stocks={this.props.stocks} /> 
+                        <SideBar watchList={this.props.stockPortfolio.properties.watch_list} stocks={this.props.stocks} /> 
                     </div>
                 </div>
             );

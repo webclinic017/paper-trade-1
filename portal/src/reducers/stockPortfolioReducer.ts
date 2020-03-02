@@ -21,6 +21,11 @@ export default (state = initialState, action: StockPortfolioActionTypes) => {
                 stockPortfolios: action.payload.stockPortfolios,
                 watchList: action.payload.watchList
             }
+        case UPDATE_WATCHLIST:
+            return {
+                ...state,
+                stockPortfolios: { ...state.stockPortfolios, ...action.payload }
+            }
         default: return state
     }
 }

@@ -8,6 +8,8 @@ export const loadStockPortfolios = (userId: Number) =>
     });
 
 export const updateWatchList = (watchList: Array<Number>, id: Number) =>
-    axios.patch(`/stock_porfolios/${id}/`, {
-        properties: { 'watch_list': watchList }
+    axios.patch(`/stock_portfolios/${id}/`, {
+        properties: {
+            watch_list: watchList
+        }
     });
