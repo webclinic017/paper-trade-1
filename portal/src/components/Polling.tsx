@@ -11,9 +11,9 @@ import { loadCurrentUserAction } from '../actions/userActions';
 import { getLastTradingDay } from '../utils'
 
 const mapStateToProps = (state: AppState) => {
-    const { watchList, viewList } = state.stockPortfolioReducer;
+    const { watchlist, viewList } = state.stockPortfolioReducer;
     const { username } = state.userReducer;
-    return { watchList, username, viewList };
+    return { watchlist, username, viewList };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 interface StateProps {
-    watchList: Array<number>, 
+    watchlist: Array<number>, 
     viewList: Array<number>,
     username: string
 }
@@ -63,12 +63,12 @@ class Polling extends Component<Props, State> {
                         p.properties.watch_list.forEach(s => watchedSymbols.add(s));
                     });                    
 
-                    const watchList = Array.from(watchedSymbols);
+                    const watchlist = Array.from(watchedSymbols);
 
-                    if (watchList.length > 0) {
+                    if (watchlist.length > 0) {
                         const date = getLastTradingDay();
-                        this.props.loadStocks(watchList);
-                        this.props.loadDailyData(watchList, date).then(res => this.props.initialDataLoaded());
+                        this.props.loadStocks(watchlist);
+                        this.props.loadDailyData(watchlist, date).then(res => this.props.initialDataLoaded());
                     } else {
                         this.props.initialDataLoaded();
                     }
@@ -78,9 +78,9 @@ class Polling extends Component<Props, State> {
     }
 
     componentDidUpdate() {
-        if (!this.state.socket) {
+        if (!this.state.socket && this.props.username) {
             const timerID = setInterval(() => {
-                // console.log(this.props.watchList, 'watch list');
+                // console.log(this.props.watchlist, 'watch list');
             }, 60000); 
                         
             const baseURL =  '127.0.0.1:8000';
@@ -92,11 +92,15 @@ class Polling extends Component<Props, State> {
             const socket = new WebSocket(endpoint);
     
             socket.onmessage = (e) => {
+                // poll data
                 if (e.data === "ready") {
+                    const viewAndWatchlist = new Set([...this.props.watchlist, ...this.props.viewList]);
                     // poll data
-                    if (this.props.watchList.length > 0) {
-                        this.props.loadDailyData(this.props.watchList, getLastTradingDay());
+                    console.log(viewAndWatchlist)
+                    if (viewAndWatchlist.size > 0) {
+                        this.props.loadDailyData(Array.from(viewAndWatchlist), getLastTradingDay());
                     }
+                    console.log(e);
                 } 
             }
     

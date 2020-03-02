@@ -96,8 +96,8 @@ class DailyStockDataViewSet(viewsets.ReadOnlyModelViewSet):
         data = DailyStockData.objects.filter(q_objects)
         query_symbol_ids = query_params.get('symbol', '').split('|')
         first_load = query_params.get('firstLoad', False)
-
-        if len(data) != len(query_symbol_ids) and first_load:
+        if len(data) != len(query_symbol_ids) and first_load == 'true':
+            print('dsadsadsadsadsa')
             fetched_symbol_ids = [str(dsd.symbol.id) for dsd in data]
             to_get = [sid for sid in query_symbol_ids if sid not in fetched_symbol_ids]
             get_intraday_data.run(symbols=to_get)

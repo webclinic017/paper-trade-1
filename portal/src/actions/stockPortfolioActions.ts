@@ -1,11 +1,11 @@
 import { IStockPortfolio } from '../models/stockPortfolio';
-import { updateWatchList, loadStockPortfolios } from '../services/stockPortfolioService'; 
+import { updateWatchlist, loadStockPortfolios } from '../services/stockPortfolioService'; 
 
 export const UPDATE_WATCHLIST = 'UPDATE_WATCHLIST';
 export const UPDATE_VIEWLIST = 'UPDATE_VIEWLIST';
 export const LOAD_STOCK_PORTFOLIOS = 'GET_STOCK_PORTFOLIOS';
 
-interface UpdateWatchListAction {
+interface UpdateWatchlistAction {
     type: typeof UPDATE_WATCHLIST,
     payload: IStockPortfolio;
 }
@@ -14,7 +14,7 @@ interface LoadStockPortfoliosAction {
     type: typeof LOAD_STOCK_PORTFOLIOS,
     payload: { 
         stockPortfolios: Array<IStockPortfolio>,
-        watchList: Array<number>
+        watchlist: Array<number>
     }
 }
 
@@ -23,24 +23,24 @@ interface UpdateViewListAction {
     payload: Array<number>;
 }
 
-export type StockPortfolioActionTypes = UpdateWatchListAction | LoadStockPortfoliosAction | UpdateViewListAction;
+export type StockPortfolioActionTypes = UpdateWatchlistAction | LoadStockPortfoliosAction | UpdateViewListAction;
 
 export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => {
     return loadStockPortfolios(userId).then(res => {
         
         const stockPortfolios: Array<IStockPortfolio> = res.data;
-        const watchList = new Set<number>();
+        const watchlist = new Set<number>();
 
         stockPortfolios.forEach(p => {
-            p.stockposition_set.forEach(sp => watchList.add(sp.stock));
-            p.properties.watch_list.forEach(s => watchList.add(s));
+            p.stockposition_set.forEach(sp => watchlist.add(sp.stock));
+            p.properties.watch_list.forEach(s => watchlist.add(s));
         });
     
         dispatch({
             type: LOAD_STOCK_PORTFOLIOS,
             payload: {
                 stockPortfolios: res.data,
-                watchList: Array.from(watchList)
+                watchlist: Array.from(watchlist)
             }
         });
         
@@ -48,8 +48,8 @@ export const loadStockPortfoliosAction = (userId: Number) => (dispatch: any) => 
     });
 };
 
-export const updateWatchListAction = (updatedList: Array<number>, portfolioId: number) => (dispatch: any) => {
-    return updateWatchList(updatedList, portfolioId).then(
+export const updateWatchlistAction = (updatedList: Array<number>, portfolioId: number) => (dispatch: any) => {
+    return updateWatchlist(updatedList, portfolioId).then(
         res => {
             dispatch({
                 type: UPDATE_WATCHLIST,

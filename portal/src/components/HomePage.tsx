@@ -60,7 +60,7 @@ class HomePage extends Component<Props> {
                         <StockChart symbolId={2126} allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
-                        <SideBar watchList={this.props.stockPortfolio.properties.watch_list} stocks={this.props.stocks} /> 
+                        <SideBar watchlist={this.props.stockPortfolio.properties.watch_list} stocks={this.props.stocks} /> 
                     </div>
                 </div>
             );

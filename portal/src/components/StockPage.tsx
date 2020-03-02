@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 import { AppState } from '../reducers/rootReducer';
 import { IStockPortfolio } from '../models/stockPortfolio';
 import { IDailyStockData, IStock } from '../models/stock';
-import { updateWatchListAction, updateViewListAction } from '../actions/stockPortfolioActions';
+import { updateWatchlistAction, updateViewListAction } from '../actions/stockPortfolioActions';
 import { loadDailyDataAction, loadStocksAction } from '../actions/stockActions';
 
 import StockChart from './StockChart';
@@ -21,7 +21,7 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateWatchList: (updatedList: Array<number>, portfolioId: number) => dispatch(updateWatchListAction(updatedList, portfolioId)),
+    updateWatchlist: (updatedList: Array<number>, portfolioId: number) => dispatch(updateWatchlistAction(updatedList, portfolioId)),
     loadStocks: (symbolIds: Array<number>) => dispatch(loadStocksAction(symbolIds)),
     loadDailyData: (symbolIds: Array<number>, date: string, firstLoad?: boolean) => dispatch(loadDailyDataAction(symbolIds, date, firstLoad)),
     updateViewList: (symbolIds: Array<number>) => dispatch(updateViewListAction(symbolIds))
@@ -44,7 +44,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    updateWatchList: (updatedList: Array<number>, portfolioId: number) => Promise<IStockPortfolio>,
+    updateWatchlist: (updatedList: Array<number>, portfolioId: number) => Promise<IStockPortfolio>,
     loadStocks: (symbolIds: Array<number>) => Promise<Array<IStock>>,
     loadDailyData: (symbolIds: Array<number>, date: string, firstLoad?: boolean) => Promise<Array<IDailyStockData>>,
     updateViewList: (symbolIds: Array<number>) => Array<number>
@@ -99,10 +99,10 @@ class StockPage extends Component<Props, State> {
             );
         } else {
 
-            const watchList = this.props.stockPortfolio.properties.watch_list;
+            const watchlist = this.props.stockPortfolio.properties.watch_list;
             const portfolioId = this.props.stockPortfolio.id;
             const symbolId = this.props.match.params.id;
-            const currentlyWatching = watchList.includes(symbolId);
+            const currentlyWatching = watchlist.includes(symbolId);
             const symbol = _get(this.props.stocks, symbolId, { symbol: ''}).symbol;
 
             return (
@@ -115,9 +115,9 @@ class StockPage extends Component<Props, State> {
                     <div className='col-4'>
                         <Button className={!currentlyWatching ? 'btn-success': 'btn-danger'} onClick={() => {
                             if (currentlyWatching) {
-                                this.props.updateWatchList(watchList.filter(s => s !== symbolId), portfolioId);
+                                this.props.updateWatchlist(watchlist.filter(s => s !== symbolId), portfolioId);
                             } else {
-                                this.props.updateWatchList([symbolId, ...watchList], portfolioId);
+                                this.props.updateWatchlist([symbolId, ...watchlist], portfolioId);
                             }
                         }}>
                             {!currentlyWatching ? 'Add to Watchlist' : 'Remove from Watchlist'}

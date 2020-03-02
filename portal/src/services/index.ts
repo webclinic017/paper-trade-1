@@ -1,7 +1,7 @@
 import { axiosClient } from './axiosClient';
 import { getAccessToken, removeAccessTokens } from './authService';
 import { autocomplete, loadDailyStockData } from './stockService';
-import { updateWatchList } from './stockPortfolioService';
+import { updateWatchlist } from './stockPortfolioService';
 
 export { 
     axiosClient as axios,
@@ -9,6 +9,6 @@ export {
     getAccessToken,
     loadDailyStockData,
     removeAccessTokens,
-    updateWatchList,
+    updateWatchlist,
 };
 

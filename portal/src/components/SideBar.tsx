@@ -7,7 +7,7 @@ import StockChart from './StockChart';
 import StockPrice from './StockPrice';
 
 interface Props {
-    watchList: Array<number>,
+    watchlist: Array<number>,
     stocks: { [key: number]: IStock },
 }
 
@@ -17,7 +17,7 @@ const SideBar = (props: Props) => {
         <div className='side-bar'>
             <ul className='list-group border-bottom-0'>
                 <h5 className="text-white pl-3 mt-3">Stocks</h5>
-                {props.watchList.map((symbolId, index) => {
+                {props.watchlist.map((symbolId, index) => {
                     const symbol = _get(props.stocks, symbolId, { symbol: ''}).symbol;
 
                     return (
@@ -38,7 +38,7 @@ const SideBar = (props: Props) => {
             </ul>
             <ul className='list-group'>
                 <h5 className="text-white pl-3 mt-3">Watchlist</h5>
-                {props.watchList.map((symbolId, index) => {
+                {props.watchlist.map((symbolId, index) => {
                     const symbol = _get(props.stocks, symbolId, { symbol: ''}).symbol;
 
                     return (

@@ -4,14 +4,14 @@ import { IStockPortfolio } from '../models/stockPortfolio';
 export interface stockPortfolioState {
     viewing: number, // which portfolio the user is viewing
     stockPortfolios: Array<IStockPortfolio>,
-    watchList: Array<number>,
+    watchlist: Array<number>,
     viewList: Array<number> // revisit this approach
 }
 
 const initialState: stockPortfolioState = {
     viewing: 0,
     stockPortfolios: [],
-    watchList: [],
+    watchlist: [],
     viewList: []
 }
 
@@ -21,7 +21,7 @@ export default (state = initialState, action: StockPortfolioActionTypes) => {
             return {
                 ...state,
                 stockPortfolios: action.payload.stockPortfolios,
-                watchList: action.payload.watchList
+                watchlist: action.payload.watchlist
             }
         case UPDATE_WATCHLIST:
             return {
