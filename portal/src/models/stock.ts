@@ -12,7 +12,8 @@ export interface IDailyStockData {
     price_data:  {
         [key: string]: { [key: string]: string },
     },
-    normalizedData: Array<Array<number>>
+    normalizedData: Array<Array<number>>,
+    volumeData: Array<Array<number>>
 }
 
 export const DefaultDailyStockData = {
@@ -21,5 +22,6 @@ export const DefaultDailyStockData = {
     date: '',
     timezone: '',
     price_data:  {},
-    normalizedData: []
+    normalizedData: [],
+    volumeData: []
 }

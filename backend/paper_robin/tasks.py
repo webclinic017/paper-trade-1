@@ -4,7 +4,7 @@ import requests
 import json
 from datetime import datetime
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
@@ -83,8 +83,9 @@ def get_intraday_data():
         watched_symbols.update(watch_list)
     
     symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
-    print(symbols, watched_symbols)
-    pool.map(fetch_intraday_data, symbols)
+
+    futures = [pool.submit(fetch_intraday_data, symbol) for symbol in symbols]
+    wait(futures, timeout=None, return_when=ALL_COMPLETED) 
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "ready"})

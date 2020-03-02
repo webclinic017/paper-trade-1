@@ -1,14 +1,26 @@
 .side-bar {
-    max-height: 75%;
+    max-height: 75vh;
+    min-height: 100%;
     width: 75%;
     overflow: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    box-shadow: 1px 3px 6px 2px rgba(0,0,0,0.75);
+}
+
+.side-bar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .side-bar .list-group {
-    border: 1px solid #0e0d0d;
+    border-top: 2px solid #0e0d0d;
+    border-bottom: 2px solid #0e0d0d;
+    /* background: #fff */
 }
 
 .side-bar .list-group-item {
+    width: 99%;
+    margin: 0 auto;
     background: #1b1b1d;
     border: 0;
     color: #fff;
