@@ -4,10 +4,12 @@ import requests
 import json
 from datetime import datetime
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from paper_robin.celery import app
-from paper_robin.apps.stock.models import DailyStockData, Stock
+from paper_robin.apps.stock.models import DailyStockData, Stock, StockPortfolio
 from paper_robin.data.utils import timestring_to_epoch
 
 def merge(d1, d2, merge_fn=lambda x,y:y):
@@ -63,13 +65,27 @@ def fetch_intraday_data(symbol):
                     )
                 except Exception as ex:
                     print(ex)
+    else:
+        print(r.status_code, "failed to fetch intraday day for {}".format(symbol))
 
 
 pool = ThreadPoolExecutor(max_workers=5)
 
 @app.task
 def get_intraday_data(): 
-    symbols = ['MSFT', "bob"]
-    pool.map(fetch_intraday_data, symbols)
+    connected_user_portfolios = StockPortfolio.objects.filter(user__connected=True)
+    print(connected_user_portfolios)
 
+    watched_symbols = set()
+        
+    for portfolio in connected_user_portfolios:
+        watch_list = portfolio.properties.get('watch_list', [])
+        watched_symbols.update(watch_list)
+    
+    symbols = [s.symbol for s in Stock.objects.filter(id__in=watched_symbols)]
 
+    futures = [pool.submit(fetch_intraday_data, symbol) for symbol in symbols]
+    wait(futures, timeout=None, return_when=ALL_COMPLETED) 
+
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)("broadcast",  {"type": "intraday_data_loaded", "text": "ready"})

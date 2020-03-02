@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework",
     "rest_framework.authtoken",
+    "channels",
     "paper_robin.apps.api",
     "paper_robin.apps.user",
     "paper_robin.apps.stock",
@@ -66,6 +67,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000"]
 
 ROOT_URLCONF = "paper_robin.urls"
+ASGI_APPLICATION = "paper_robin.routing.application"
 
 AUTH_USER_MODEL = "user.User"
 
@@ -125,6 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -159,4 +162,19 @@ CELERY_BEAT_SCHEDULE = {
         "task": "paper_robin.tasks.hello",
         "schedule": crontab(),  # execute every minute
     }
+}
+
+# Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://redis:6379'],
+        },
+    }
+}
+
+# JWT
+JWT_AUTH = {
+    'JWT_AUTH_COOKIE': 'JWT',     # the cookie will also be sent on WebSocket connections
 }

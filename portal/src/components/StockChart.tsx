@@ -27,6 +27,7 @@ interface OwnProps {
     allowSelectRange?: boolean,
     disableXAxis?: boolean,
     disableMouseTracking?: boolean,
+    disableVolume?: boolean,
     height?: number,
     title?: string,
     loading?: boolean,
@@ -69,9 +70,37 @@ class Chart extends Component<Props, State> {
                 }],
                 visible: !this.props.disableXAxis
             },
-            yAxis: {
-                visible: false,
-            },
+            yAxis: [
+                {
+                  'visible': false,
+                  labels: {
+                    align: "right",
+                    x: -3
+                  },
+                  title: {
+                    text: "OHLC"
+                  },
+                  height: "60%",
+                  lineWidth: 1,
+                  resize: {
+                    enabled: true
+                  }
+                },
+                {
+                  'visible': false,
+                  labels: {
+                    align: "right",
+                    x: -3
+                  },
+                  title: {
+                    text: "Volume"
+                  },
+                  top: "65%",
+                  height: "35%",
+                  offset: 0,
+                  lineWidth: 2
+                }
+            ],
             rangeSelector: {
                 enabled: false
             },
@@ -91,20 +120,31 @@ class Chart extends Component<Props, State> {
                     ]
                 },
                 threshold: null
-            }]
+            },{
+                type: "column",
+                name: "Volume",
+                data: [],
+                yAxis: 1,
+                visible: true
+              }
+            ]
           };
 
           this.state = { options: options }
     }
 
     render() {
-        const chartData: Array<Array<number>> = _.get(this.props.dailyData, this.props.symbolId, { normalizedData: []}).normalizedData;
+        const dailyData =  _.get(this.props.dailyData, this.props.symbolId, { normalizedData: [], volumeData: []});
+        const chartData: Array<Array<number>> = dailyData.normalizedData;
+        const volumeData: Array<Array<number>> = dailyData.volumeData;
         const series = this.state.options.series;
+
         series[0].data = chartData;
         series[0]['color'] = '#f45531';
+        series[1].data = volumeData;
         const options = {...this.state.options, series: series};
 
-        if (this.props.loading) {
+        if (this.props.loading || !dailyData) {
             return (
                 <div className="text-center mt-5">
                     <Loader

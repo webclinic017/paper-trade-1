@@ -18,11 +18,12 @@ import SideBar from './SideBar';
 
 
 const mapStateToProps = (state: AppState) => {
+    const { dailyData, stocks } = state.stockReducer;
     const { stockPortfolios, watchList, viewing } = state.stockPortfolioReducer;
     if (stockPortfolios.length > 0) {
-        return { stockPortfolio: stockPortfolios[viewing], watchList };
+        return { stockPortfolio: stockPortfolios[viewing], watchList, dailyData, stocks };
     } else {
-        return { stockPortfolio: DefaultStockPortfolio, watchList };
+        return { stockPortfolio: DefaultStockPortfolio, watchList, dailyData, stocks };
     }
 };
 
@@ -35,7 +36,13 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 interface StateProps {
     stockPortfolio: IStockPortfolio,
-    watchList: Array<number>
+    watchList: Array<number>,
+    dailyData: {
+        [key: number]: IDailyStockData
+    },
+    stocks: {
+        [key: number]: IStock
+    }
 }
 
 interface DispatchProps {
@@ -78,7 +85,7 @@ class HomePage extends Component<Props, State> {
                     if (watchList.length > 0) {
                         this.props.loadStocks(watchList);
 
-                        this.props.loadDailyData(watchList, '2020-02-13').then(res => {
+                        this.props.loadDailyData(watchList, '2020-02-28').then(res => {
                             this.setState({ loading: false });
                         });
                     } else {
@@ -110,10 +117,10 @@ class HomePage extends Component<Props, State> {
                             {moneyFormatter(26000)}
                         </h1>
                         <hr className="bg-secondary"/>
-                        <StockChart symbolId={2944} allowSelectRange={true} />
+                        <StockChart symbolId={2126} allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
-                        <SideBar watchList={this.props.watchList}/> 
+                        <SideBar watchList={this.props.watchList} stocks={this.props.stocks} /> 
                     </div>
                 </div>
             );

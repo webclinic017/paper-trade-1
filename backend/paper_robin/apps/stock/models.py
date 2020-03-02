@@ -18,12 +18,14 @@ class Stock(TimeStampedModel):
     name = models.CharField(max_length=255, db_index=True)
     exchanges = models.ManyToManyField(StockExchange)
 
+def stock_portfolio_default_properties():
+    return { 'watch_list': [] }
 
 class StockPortfolio(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     principal = models.DecimalField(decimal_places=2, max_digits=15)
     purchasing_power = models.DecimalField(decimal_places=2, max_digits=15, default=0)
-    properties = JSONField(default=dict)
+    properties = JSONField(default=stock_portfolio_default_properties)
 
 
 @receiver(post_save, sender=User)

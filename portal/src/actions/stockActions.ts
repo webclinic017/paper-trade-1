@@ -45,16 +45,26 @@ export const loadDailyDataAction = (symbolIds: Array<number>, date: string) => (
 
             data.forEach(dsd => {
                 const priceData: {
-                    [key: string]: string,
+                    [key: string]: { [key: string] : string },
                 } = dsd.price_data;
 
                 const chartData: Array<Array<number>> = [];
+                const volumeData: Array<Array<number>> = [];
 
                 Object.keys(priceData).forEach(key => {
-                    chartData.push([(parseFloat(key) * 1000), parseFloat(priceData[key])]);
+                    const timestamp = parseFloat(key) * 1000;
+                    const open = parseFloat(priceData[key]['1. open']);
+                    const high = parseFloat(priceData[key]['2. high']);
+                    const low = parseFloat(priceData[key]['3. low']);
+                    const close = parseFloat(priceData[key]['4. close']);
+                    const volume = parseFloat(priceData[key]['5. volume'])
+
+                    chartData.push([timestamp, open, high, low, close]);
+                    volumeData.push([timestamp, volume]);
                 });
 
                 dsd.normalizedData = chartData;
+                dsd.volumeData = volumeData;
                 normalizedData[dsd.symbol] = dsd;
             });
 
