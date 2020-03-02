@@ -24,7 +24,7 @@ export default (state = initialState, action: StockPortfolioActionTypes) => {
         case UPDATE_WATCHLIST:
             return {
                 ...state,
-                stockPortfolios: { ...state.stockPortfolios, ...action.payload }
+                stockPortfolios: [...state.stockPortfolios.filter(s => s.id !== action.payload.id), action.payload]
             }
         default: return state
     }

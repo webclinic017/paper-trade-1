@@ -6,7 +6,7 @@ export const LOAD_STOCK_PORTFOLIOS = 'GET_STOCK_PORTFOLIOS';
 
 interface UpdateWatchListAction {
     type: typeof UPDATE_WATCHLIST,
-    payload: Array<string>;
+    payload: IStockPortfolio;
 }
 
 interface LoadStockPortfoliosAction {

@@ -24,7 +24,7 @@ const SideBar = (props: Props) => {
                             <span className="w-25 pl-3 d-flex align-items-center">{symbol}</span>
 
                             <div className='side-bar-chart w-50'>
-                                <StockChart symbolId={symbolId} disableMouseTracking={true} disableXAxis={true} disableVolume={true} height={100} />
+                                <StockChart symbolId={symbolId} disableMouseTracking={true} disableXAxis={true} disableVolume={true} height={100} title={symbol} />
                             </div>
                             
                             <div className="w-25 ml-1 d-flex align-items-center">

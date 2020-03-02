@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import Highcharts from 'highcharts/highstock';
+import Highcharts, { stockChart } from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -15,7 +15,8 @@ const mapStateToProps = (state: AppState) => {
 };
 
 interface State {
-    options: any
+    options: any,
+    chartType: string
 }
 
 interface StateProps {
@@ -24,6 +25,7 @@ interface StateProps {
 
 interface OwnProps {
     symbolId: number,
+    chartType?: string,
     allowSelectRange?: boolean,
     disableXAxis?: boolean,
     disableMouseTracking?: boolean,
@@ -39,17 +41,17 @@ class Chart extends Component<Props, State> {
     
     constructor(props: Props) {
         super(props);
+
+        const chartType = this.props.chartType ? this.props.chartType : 'spline';
+        
         const options = {
             chart:{
-                backgroundColor: 'transparent',
                 height: props.height,
+                backgroundColor: 'transparent',
+                className: 'LifeCycleMasterChart'
             },
             credits: {
                 'enabled': false
-            },
-            title: {
-                text: props.title,
-                align: 'left'
             },
             navigator: {
                 enabled: false
@@ -58,7 +60,6 @@ class Chart extends Component<Props, State> {
                 enabled: false
             },
             xAxis: {
-                // visible: false,
                 breaks: [{ // Nights
                     from: Date.UTC(2011, 9, 6, 16),
                     to: Date.UTC(2011, 9, 7, 8),
@@ -72,7 +73,7 @@ class Chart extends Component<Props, State> {
             },
             yAxis: [
                 {
-                  'visible': false,
+                  visible: false,
                   labels: {
                     align: "right",
                     x: -3
@@ -87,7 +88,7 @@ class Chart extends Component<Props, State> {
                   }
                 },
                 {
-                  'visible': false,
+                  visible: false,
                   labels: {
                     align: "right",
                     x: -3
@@ -105,32 +106,37 @@ class Chart extends Component<Props, State> {
                 enabled: false
             },
             series: [{
-                name: 'AAPL',
-                type: 'area',
+                type: chartType,
+                name: 'Price',
                 data: [],
-                gapSize: 5,
-                tooltip: {
-                    valueDecimals: 2
-                },
-                enableMouseTracking: !this.props.disableMouseTracking,
-                fillColor: {
-                    stops: [
-                        [0, '#1b1b1d'],
-                        [1, '#1b1b1d']
-                    ]
-                },
-                threshold: null
+                    gapSize: 5,
+                    tooltip: {
+                        valueDecimals: 2,
+                    },
+                    enableMouseTracking: !this.props.disableMouseTracking,
+                    fillColor: {
+                        stops: [
+                            [0, '#1b1b1d'],
+                            [1, '#1b1b1d']
+                        ]
+                    },
+                    threshold: null
             },{
                 type: "column",
                 name: "Volume",
                 data: [],
                 yAxis: 1,
-                visible: true
+                visible: true,
               }
             ]
           };
 
-          this.state = { options: options }
+          this.state = { options, chartType }
+    }
+
+    changeChartType = () => {
+        const chartType = this.state.chartType == 'spline' ? 'candlestick' : 'spline';
+        this.setState({ chartType });
     }
 
     render() {
@@ -138,9 +144,16 @@ class Chart extends Component<Props, State> {
         const chartData: Array<Array<number>> = dailyData.normalizedData;
         const volumeData: Array<Array<number>> = dailyData.volumeData;
         const series = this.state.options.series;
+        const dataGrouping = this.state.chartType === 'spline' ? {
+            approximation: 'average'
+        } : {
+            approximation: 'ohlc'
+        }
 
+        series[0].type = this.state.chartType;
         series[0].data = chartData;
-        series[0]['color'] = '#f45531';
+        series[0].color = '#f45531';
+        series[0].dataGrouping = dataGrouping;
         series[1].data = volumeData;
         const options = {...this.state.options, series: series};
 
@@ -158,13 +171,18 @@ class Chart extends Component<Props, State> {
             );
         } else {
             const rangeSelector = this.props.allowSelectRange ? (
-                <div className="row range-selector w-75 mx-3">
-                    <button className="range-select-1d">1 Day</button>
-                    <button className="range-select-1w">1 Week</button>
-                    <button className="range-select-3m">3 Month</button>
-                    <button className="range-select-1y">1 Year</button>
-                    <button className="range-select-all">All</button>
-                    <hr className=""/>
+                <div className="row">
+                    <div className="row col-9 range-selector mx-3">
+                        <button className="range-select-1d">1 Day</button>
+                        <button className="range-select-1w">1 Week</button>
+                        <button className="range-select-3m">3 Month</button>
+                        <button className="range-select-1y">1 Year</button>
+                        <button className="range-select-all">All</button>
+                        <hr className=""/>
+                    </div>
+                    <div className="col-2 ml-5">
+                        <button className="btn btn-danger bg-transparent" onClick={this.changeChartType}>{this.state.chartType}</button>
+                    </div>
                 </div>
             ) : null;
 

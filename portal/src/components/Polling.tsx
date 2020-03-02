@@ -8,7 +8,7 @@ import { IStockPortfolio } from '../models/stockPortfolio';
 import { loadStockPortfoliosAction } from '../actions/stockPortfolioActions';
 import { loadStocksAction, loadDailyDataAction, initialDataLoadedAction } from '../actions/stockActions';
 import { loadCurrentUserAction } from '../actions/userActions';
-import { getPreviousWorkDay } from '../utils'
+import { getLastTradingDay } from '../utils'
 
 const mapStateToProps = (state: AppState) => {
     const { watchList } = state.stockPortfolioReducer;
@@ -65,7 +65,7 @@ class Polling extends Component<Props, State> {
                     const watchList = Array.from(watchedSymbols);
 
                     if (watchList.length > 0) {
-                        const date = getPreviousWorkDay();
+                        const date = getLastTradingDay();
                         this.props.loadStocks(watchList);
                         this.props.loadDailyData(watchList, date).then(res => this.props.initialDataLoaded());
                     } else {
@@ -94,7 +94,7 @@ class Polling extends Component<Props, State> {
                 if (e.data === "ready") {
                     // poll data
                     if (this.props.watchList.length > 0) {
-                        this.props.loadDailyData(this.props.watchList, '2020-02-28');
+                        this.props.loadDailyData(this.props.watchList, getLastTradingDay());
                     }
                 } 
             }

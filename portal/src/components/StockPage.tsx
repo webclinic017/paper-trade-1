@@ -12,7 +12,7 @@ import { updateWatchListAction } from '../actions/stockPortfolioActions';
 import { loadDailyDataAction, loadStocksAction } from '../actions/stockActions';
 
 import StockChart from './StockChart';
-import { moneyFormatter, getPreviousWorkDay } from '../utils';
+import { moneyFormatter, getLastTradingDay } from '../utils';
 
 const mapStateToProps = (state: AppState) => {
     const { dailyData, stocks, initialDataLoaded } = state.stockReducer;
@@ -62,7 +62,7 @@ class StockPage extends Component<Props, State> {
 
     componentDidMount() {
         this.setState({ loading: true });
-        const date = getPreviousWorkDay();
+        const date = getLastTradingDay();
         const symbolId = this.props.match.params.id;
 
         this.props.loadStocks([symbolId]);
@@ -72,6 +72,7 @@ class StockPage extends Component<Props, State> {
     }
 
     render() {
+        console.log('rerender')
         if (!this.props.initialDataLoaded || this.state.loading) {
             return (
                 <div className='homepage-loader'>
@@ -99,7 +100,7 @@ class StockPage extends Component<Props, State> {
                         <StockChart symbolId={2126} allowSelectRange={true} />
                     </div>
                     <div className='col-4'>
-                        <Button className='btn-danger' onClick={() => {
+                        <Button className={!currentlyWatching ? 'btn-success': 'btn-danger'} onClick={() => {
                             if (currentlyWatching) {
                                 this.props.updateWatchList(watchList.filter(s => s !== symbolId), portfolioId);
                             } else {
