@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormControl } from 'react-bootstrap';
 
 import { axios, autocomplete } from '../services';
+import history from '../history';
 
 class Search extends Component {
     state = {
@@ -42,20 +43,21 @@ class Search extends Component {
         }
     };
 
-    select = () => {
+    select = (symbolId: number) => {
         this.setState({
             searchString: '',
             suggestions: [],
             cancelSource: null
         });
+        history.push(`/stocks/${symbolId}`);
     };
 
-    highlight = (searchString: string, value: string) => {
+    highlight = (searchString: string, value: string, isSymbol?: boolean) => {
         if (value.toLowerCase().startsWith(searchString.toLowerCase())) {
             return (
                 <>
                     <span className="text-danger">
-                        {searchString.toUpperCase()}
+                        {isSymbol ? searchString.toUpperCase() : searchString}
                     </span>
                     <span>
                         { value.substring(value.indexOf(searchString) + searchString.length + 1) }
@@ -76,11 +78,11 @@ class Search extends Component {
 
         if (this.state.suggestions.length > 0) {
             suggestions = (
-                this.state.suggestions.map((s: { symbol: string, name: string, id: string }) => 
+                this.state.suggestions.map((s: { symbol: string, name: string, id: number }) => 
                     <li className='list-group-item text-white bg-transparent'
-                        key={s.id} onClick={this.select}
+                        key={s.id} onClick={() => this.select(s.id)}
                     >
-                        ({this.highlight(this.state.searchString, s.symbol)})
+                        ({this.highlight(this.state.searchString, s.symbol, true)})
                         &nbsp;
                         {this.highlight(this.state.searchString, s.name)}
                     </li>
