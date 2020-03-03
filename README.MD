@@ -4,11 +4,11 @@ Paper trading app with similar UI as robinhood.
 
 ### Prerequisites
 
-*Python >= 3.6
-*pip
-*virtualenv -- recommended
-*Node
-*Docker
+* Python >= 3.6
+* pip
+* virtualenv -- recommended
+* Node
+* Docker
 
 ### Installing
 
