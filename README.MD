@@ -1,4 +1,4 @@
-# Paper Robin
+# Paper Trade
 
 Paper trading app with a simple UI.
 
