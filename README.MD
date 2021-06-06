@@ -1,6 +1,6 @@
 # Paper Robin
 
-Paper trading app with similar UI as robinhood.
+Paper trading app with a simple UI.
 
 ### Prerequisites
 
